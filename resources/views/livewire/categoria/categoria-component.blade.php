@@ -10,6 +10,7 @@
             <x-slot:thead>
                 <th>ID</th>
                 <th>NOMBRE</th>
+                <th>DESCRIPCION</th>
                 <th width="6%">VER</th>
                 <th width="6%">EDITAR</th>
                 <th width="6%">BORRAR</th>
@@ -20,6 +21,7 @@
                 <tr>
                     <td>{{ $categoria->id }}</td>
                     <td>{{ $categoria->nombre }}</td>
+                    <td>{{ $categoria->descripcion }}</td>
                     <td>
                         <a href="{{route('categorias.ver', $categoria)}}" class="btn btn-success btn-sm" title="Ver">
                             <i class="far fa-eye"></i>
@@ -53,7 +55,6 @@
 
     </x-card>
 
-
     <x-modal modalId="modalCategoria" modalTitle="Categorias">
         <form wire:submit={{$Id ==0 ? "store" : "update($Id)"}}>
             <div class="form-row">
@@ -62,6 +63,14 @@
                     <input wire:model='nombre' type="text" class="form-control" placeholder="Nombre Categoria"
                         id="nombre">
                     @error('nombre')
+                        <div class="alert alert-danger w-100 mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="form-group col-12">
+                    <label class="fas fa-th" for="descripcion"> Descripcion:</label>
+                    <input wire:model='descripcion' type="text" class="form-control" placeholder="Descripcion de la Categoria"
+                        id="descripcion">
+                    @error('descripcion')
                         <div class="alert alert-danger w-100 mt-2">{{ $message }}</div>
                     @enderror
                 </div>

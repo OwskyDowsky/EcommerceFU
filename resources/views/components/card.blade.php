@@ -1,4 +1,4 @@
-@props(['cardTitle'=>'','cardTools'=>'','cardFooter'=>'',])
+@props(['cardTitle'=>'','cardTools'=>'','','cardFooter'=>''])
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">{{$cardTitle}}</h3>
@@ -10,6 +10,8 @@
         {{$slot}}
     </div>
     <div class="card-footer">
-        {{$cardFooter}}
+        <div>
+            {{$cardFooter}}
+        </div>          
     </div>
 </div>

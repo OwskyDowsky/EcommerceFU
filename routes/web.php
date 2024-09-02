@@ -4,6 +4,8 @@ use App\Livewire\Categoria\CategoriaComponent;
 use App\Livewire\Home\Inicio;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Categoria\CategoriaVer;
+use App\Livewire\Proyecto\ProyectoComponent;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,3 +28,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/inicio',Inicio::class)->name('inicio');
 Route::get('/categorias',CategoriaComponent::class)->name('categorias');
 Route::get('/categorias/{categoria}', CategoriaVer::class)->name('categorias.ver');
+/* nuestros proyectos*/
+Route::get('/proyectos',ProyectoComponent::class)->name('proyectos');

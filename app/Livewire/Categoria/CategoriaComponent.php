@@ -17,6 +17,7 @@ class CategoriaComponent extends Component
     public $cant=5;
     //propiedad modelo
     public $nombre;
+    public $descripcion;
     public $Id;
 
     public function render()
@@ -50,18 +51,19 @@ class CategoriaComponent extends Component
     public function store(){
         //dump('crear categoria');
         $rules = [
-            'nombre' => 'required|min:3|max:14|unique:categorias'
+            'nombre' => 'required|min:3|max:30|unique:categorias'
         ];
         $messages = [
             'nombre.required' => 'El nombre es requerido',
             'nombre.min' => 'El nombre debe tener minimo 3 caracteres',
-            'nombre.max' => 'El nombre solo puede tener 14 caracteres',
+            'nombre.max' => 'El nombre solo puede tener 30 caracteres',
             'nombre.unique' => 'El nombre de la categoria ya existe'
         ];
         $this->validate($rules,$messages);
 
         $categoria = new Categorias();
         $categoria->nombre = $this->nombre;
+        $categoria->descripcion = $this->descripcion;
         $categoria->save();
 
         $this->dispatch('close-modal','modalCategoria');
@@ -74,6 +76,7 @@ class CategoriaComponent extends Component
         $this->reset(['nombre']);
         $this->Id = $categoria->id;
         $this->nombre = $categoria->nombre;
+        $this->descripcion = $categoria->descriocion;
         $this->dispatch('open-modal','modalCategoria');
 
         //dump($categoria);
@@ -81,17 +84,18 @@ class CategoriaComponent extends Component
     public function update(Categorias $categoria){
         //dump($categoria);
         $rules = [
-            'nombre' => 'required|min:3|max:14|unique:categorias,id,'.$this->Id
+            'nombre' => 'required|min:3|max:30|unique:categorias,id,'.$this->Id
         ];
         $messages = [
             'nombre.required' => 'El nombre es requerido',
             'nombre.min' => 'El nombre debe tener minimo 3 caracteres',
-            'nombre.max' => 'El nombre solo puede tener 14 caracteres',
+            'nombre.max' => 'El nombre solo puede tener 30 caracteres',
             'nombre.unique' => 'El nombre de la categoria ya existe'
         ];
         $this->validate($rules,$messages);
 
         $categoria->nombre = $this->nombre;
+        $categoria->descripcion = $this->descripcion;
         $categoria->update();
 
         $this->dispatch('close-modal','modalCategoria');

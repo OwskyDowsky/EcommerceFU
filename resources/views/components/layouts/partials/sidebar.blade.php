@@ -41,6 +41,15 @@
             </a>
           </li>
 
+          <li class="nav-item">
+            <a href="{{ route('proyectos') }}" class="nav-link">
+                <i class="nav-icon fas fa-th-large"></i>
+                <p>
+                    Nuestros Proyectos
+                </p>
+            </a>
+          </li>
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

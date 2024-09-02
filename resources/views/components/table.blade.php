@@ -1,7 +1,7 @@
 <div class="mb-3 d-flex justify-content-between">
     <div>
         <span>Mostrar</span>
-        <select>
+        <select wire:model.live='cant'>
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="25">25</option>
@@ -11,17 +11,18 @@
         <span>Entradas</span>
     </div>
     <div>
-        <input class="form-control" type="text" placeholder="Buscar">
+        <input type="text" wire:model.live='search' class="form-control" placeholder="Buscar...">
     </div>
 </div>
-
 <div class="table-responsive">
-    <table class="table">
+    <table class="table table-striped table-hover text-center">
         <thead>
-            {{$thead}}
-        </thead>  
+            <tr>
+                {{$thead}}
+            </tr>
+        </thead>
         <tbody>
             {{$slot}}
-        </tbody>  
+        </tbody>
     </table>
 </div>
