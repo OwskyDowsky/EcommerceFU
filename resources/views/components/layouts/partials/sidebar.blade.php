@@ -32,6 +32,15 @@
               </a>
           </li>
 
+          <li class="nav-item">
+            <a href="{{ route('categorias') }}" class="nav-link">
+                <i class="nav-icon fas fa-th-large"></i>
+                <p>
+                    Categorias
+                </p>
+            </a>
+          </li>
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
