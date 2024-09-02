@@ -10,6 +10,7 @@
             <x-slot:thead>
                 <th>ID</th>
                 <th>NOMBRE</th>
+                <th>DESCRIPCION</th>
                 <th width="6%">VER</th>
                 <th width="6%">EDITAR</th>
                 <th width="6%">BORRAR</th>
@@ -20,6 +21,7 @@
                 <tr>
                     <td>{{ $categoria->id }}</td>
                     <td>{{ $categoria->nombre }}</td>
+                    <td>{{ $categoria->descripcion }}</td>
                     <td>
                         <a href="{{route('categorias.ver', $categoria)}}" class="btn btn-success btn-sm" title="Ver">
                             <i class="far fa-eye"></i>
