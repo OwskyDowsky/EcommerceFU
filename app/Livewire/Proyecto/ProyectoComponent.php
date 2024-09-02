@@ -2,11 +2,11 @@
 
 namespace App\Livewire\Proyecto;
 
+use Livewire\WithPagination;
+use Livewire\WithFileUploads;
 use App\Models\Proyectos;
 use Livewire\Attributes\Title;
 use Livewire\Component;
-use Livewire\WithPagination;
-use Livewire\WithFileUploads;
 
 #[Title('Nuestros Proyectos')]
 class ProyectoComponent extends Component
@@ -33,7 +33,7 @@ class ProyectoComponent extends Component
                         ->paginate($this->cant);
 
         return view('livewire.proyecto.proyecto-component',[
-            'proyectos' => $proyectos
+            'proyectos' => $proyectos,
         ]);
     }
     public function create(){
