@@ -42,7 +42,7 @@ class CategoriaComponent extends Component
     public function create(){
         $this->Id=0;
 
-        $this->reset(['nombre']);
+        $this->clean();
         $this->resetErrorBag();
         $this->dispatch('open-modal','modalCategoria');
         
@@ -69,14 +69,14 @@ class CategoriaComponent extends Component
         $this->dispatch('close-modal','modalCategoria');
         $this->dispatch('msg','Categoria creada correctamente');
 
-        $this->reset(['nombre']);
+        $this->clean();
     }
     public function edit(Categorias $categoria){
         //agrege el reset si no da eliminar reset nombre
-        $this->reset(['nombre']);
+        $this->clean();
         $this->Id = $categoria->id;
         $this->nombre = $categoria->nombre;
-        $this->descripcion = $categoria->descriocion;
+        $this->descripcion = $categoria->descripcion;
         $this->dispatch('open-modal','modalCategoria');
 
         //dump($categoria);
@@ -101,7 +101,7 @@ class CategoriaComponent extends Component
         $this->dispatch('close-modal','modalCategoria');
         $this->dispatch('msg','Categoria editada correctamente');
 
-        $this->reset(['nombre']);
+        $this->clean();
     }
     #[On('destroyCategoria')]
     public function destroy($id){
@@ -110,5 +110,13 @@ class CategoriaComponent extends Component
         $categoria->delete();
 
         $this->dispatch('msg','Categoria Eliminada correctamente');
+    }
+    // metodo limpieza
+    public function clean()
+    {
+        $this->reset([
+            'nombre', 'Id', 'descripcion',
+        ]);
+        $this->resetErrorBag();
     }
 }

@@ -25,7 +25,7 @@
 
           <li class="nav-item">
               <a href="pages/widgets.html" class="nav-link">
-                <i class="nav-icon fas fa-store"></i>
+                <i class="fas fa-home"></i>
                 <p>
                   Inicio
                 </p>
@@ -43,9 +43,27 @@
 
           <li class="nav-item">
             <a href="{{ route('proyectos') }}" class="nav-link">
-                <i class="nav-icon fas fa-th-large"></i>
+                <i class="fas fa-project-diagram"></i>
                 <p>
                     Nuestros Proyectos
+                </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ route('sedes') }}" class="nav-link">
+                <i class="fas fa-map"></i>
+                <p>
+                    Sedes
+                </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ route('productos') }}" class="nav-link">
+                <i class="fas fa-shopping-cart"></i>
+                <p>
+                    Productos
                 </p>
             </a>
           </li>

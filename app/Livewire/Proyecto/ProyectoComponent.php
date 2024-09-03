@@ -2,11 +2,12 @@
 
 namespace App\Livewire\Proyecto;
 
+use Livewire\Component;
+use App\Models\Proyectos;
+use Livewire\Attributes\On;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
-use App\Models\Proyectos;
 use Livewire\Attributes\Title;
-use Livewire\Component;
 
 #[Title('Nuestros Proyectos')]
 class ProyectoComponent extends Component
@@ -33,7 +34,7 @@ class ProyectoComponent extends Component
                         ->paginate($this->cant);
 
         return view('livewire.proyecto.proyecto-component',[
-            'proyectos' => $proyectos,
+            'proyectos' => $proyectos
         ]);
     }
     public function create(){
@@ -94,6 +95,13 @@ class ProyectoComponent extends Component
         $this->dispatch('msg','Proyecto editada correctamente');
 
         $this->clean();
+    }
+    #[On('destroyProyecto')]
+    public function destroy($id){
+        $proyecto = Proyectos::findOrfail($id);
+        $proyecto->delete();
+
+        $this->dispatch('msg','Proyecto Eliminada correctamente');
     }
     // metodo limpieza
     public function clean()

@@ -1,10 +1,14 @@
 <?php
 
-use App\Livewire\Categoria\CategoriaComponent;
 use App\Livewire\Home\Inicio;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Proyecto\ProyectoVer;
 use App\Livewire\Categoria\CategoriaVer;
+use App\Livewire\Producto\ProductoComponent;
 use App\Livewire\Proyecto\ProyectoComponent;
+use App\Livewire\Categoria\CategoriaComponent;
+use App\Livewire\Producto\ProductoVer;
+use App\Livewire\Sede\SedeComponent;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +34,9 @@ Route::get('/categorias',CategoriaComponent::class)->name('categorias');
 Route::get('/categorias/{categoria}', CategoriaVer::class)->name('categorias.ver');
 /* nuestros proyectos*/
 Route::get('/proyectos',ProyectoComponent::class)->name('proyectos');
+Route::get('/proyectos/{proyecto}',ProyectoVer::class)->name('proyectos.ver');
+/*productos*/
+Route::get('/productos',ProductoComponent::class)->name('productos');
+Route::get('/productos/{producto}',ProductoVer::class)->name('productos.ver');
+/*sedes*/
+Route::get('/sedes',SedeComponent::class)->name('sedes');

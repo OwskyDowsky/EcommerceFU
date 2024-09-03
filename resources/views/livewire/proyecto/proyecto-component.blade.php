@@ -32,9 +32,9 @@
                         </div>
                     </td>
                     <td>
-                        {{--<a href="{{route('categorias.ver', $categoria)}}" class="btn btn-success btn-sm" title="Ver">
+                        <a href="{{route('proyectos.ver', $proyecto)}}" class="btn btn-success btn-sm" title="Ver">
                             <i class="far fa-eye"></i>
-                        </a>--}}
+                        </a>
                     </td>
                     <td>
                         <a href="#" wire:click='edit({{$proyecto->id}})' class="btn btn-warning btn-sm" title="Editar">
@@ -51,7 +51,7 @@
 
             @empty
                 <tr class="text-center">
-                    <td colspan="5">Sin registros</td>
+                    <td colspan="8">Sin registros</td>
                 </tr>
             @endforelse
 
