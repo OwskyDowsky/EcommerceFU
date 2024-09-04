@@ -11,7 +11,7 @@
                 <th>ID</th>
                 <th><i class="fas fa-image"></i></th>
                 <th>NOMBRE</th>
-                <th>DESCRIPCION</th>
+                <th>SEDE</th>
                 <th>PRECIO</th>
                 <th>STOCK</th>
                 <th>ESTADO</th>
@@ -28,7 +28,7 @@
                         <x-image :item="$producto" />
                     </td>
                     <td>{{ $producto->nombre }}</td>
-                    <td>{{ $producto->descripcion }}</td>
+                    <td>{{ $producto->sede->nombre }}</td>
                     <td>{{ $producto->precio }}</td>
                     <td>{{ $producto->stock }}</td>
                     <td>
@@ -68,10 +68,10 @@
         </x-slot>
     </x-card>
 
-    <x-modal modalId="modalProducto" modalTitle="Productos">
+    <x-modal modalId="modalProducto" modalTitle="Productos" modalSize="modal-xl">
         <form wire:submit={{$Id ==0 ? "store" : "update($Id)"}}>
             <div class="form-row">
-                <div class="form-group col-12">
+                <div class="form-group col-4">
                     <label class="fas fa-th" for="nombre"> Nombre del producto:</label>
                     <input wire:model='nombre' type="text" class="form-control" placeholder="Nombre del proyecto"
                         id="nombre">
@@ -79,15 +79,21 @@
                         <div class="alert alert-danger w-100 mt-2">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="form-group col-12">
+        
+                <div class="form-group col-4">
                     <label class="fas fa-th" for="precio"> Precio del producto:</label>
-                    <input wire:model='precio' type="number" class="form-control" placeholder="Precio del producto"
-                        id="precio">
+                    <div class="input-group">
+                        <input wire:model='precio' type="number" class="form-control" placeholder="Precio del producto" id="precio">
+                        <div class="input-group-append">
+                            <span class="input-group-text">BS.</span>
+                        </div>
+                    </div>
                     @error('precio')
                         <div class="alert alert-danger w-100 mt-2">{{ $message }}</div>
                     @enderror
-                </div>
-                <div class="form-group col-12">
+                </div>                 
+
+                <div class="form-group col-4">
                     <label class="fas fa-th" for="stock"> Stock del producto:</label>
                     <input wire:model='stock' type="number" class="form-control" placeholder="Stock del producto"
                         id="stock">
@@ -98,13 +104,13 @@
                 <div class="form-group col-12">
                     <label class="fas fa-th" for="descripcion"> Descripcion del producto:</label>
                     <textarea wire:model='descripcion' type="text" class="form-control" placeholder="Descripcion del proyecto"
-                        id="descripcion" rows="4">
+                        id="descripcion" rows="2">
                     </textarea>
                     @error('descripcion')
                         <div class="alert alert-danger w-100 mt-2">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-4">
                     <label class="fas fa-globe" for="categoria_id"> Categoria:</label>
                     <select wire:model="categoria_id" id="categoria_id" class="form-control">
                         <option value="0">seleccionar</option>
@@ -117,7 +123,7 @@
                         <div class="alert alert-danger w-100 mt-2">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-4">
                     <label class="fas fa-globe" for="proyecto_id"> Proyecto:</label>
                     <select wire:model="proyecto_id" id="proyecto_id" class="form-control">
                         <option value="0">seleccionar</option>
@@ -130,7 +136,7 @@
                         <div class="alert alert-danger w-100 mt-2">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-4">
                     <label class="fas fa-globe" for="sede_id"> Sede:</label>
                     <select wire:model="sede_id" id="sede_id" class="form-control">
                         <option value="0">seleccionar</option>

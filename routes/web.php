@@ -7,6 +7,7 @@ use App\Livewire\Categoria\CategoriaVer;
 use App\Livewire\Producto\ProductoComponent;
 use App\Livewire\Proyecto\ProyectoComponent;
 use App\Livewire\Categoria\CategoriaComponent;
+use App\Livewire\Cupon\CuponComponent;
 use App\Livewire\Producto\ProductoVer;
 use App\Livewire\Sede\SedeComponent;
 
@@ -40,3 +41,5 @@ Route::get('/productos',ProductoComponent::class)->name('productos');
 Route::get('/productos/{producto}',ProductoVer::class)->name('productos.ver');
 /*sedes*/
 Route::get('/sedes',SedeComponent::class)->name('sedes');
+/*cupones*/
+Route::get('/cupones',CuponComponent::class)->name('cupones');

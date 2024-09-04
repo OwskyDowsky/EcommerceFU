@@ -23,17 +23,22 @@ class Productos extends Model
             }
         );
     }
-    //modelos relacionados
-    public function categorias()
+    //modelos relacionados recibir
+    public function categoria()
     {
         return $this->belongsTo(Categorias::class); 
     }
-    public function sedes()
+    public function sede()
     {
         return $this->belongsTo(Sedes::class); 
     }
-    public function proyectos()
+    public function proyecto()
     {
         return $this->belongsTo(Proyectos::class); 
+    }
+    //mandar
+    public function cupones()
+    {
+        return $this->hasMany(Cupones::class); 
     }
 }

@@ -119,7 +119,8 @@ class ProductoComponent extends Component
         $this->categoria_id = $producto->categoria_id;
         $this->proyecto_id = $producto->proyecto_id;
         $this->sede_id = $producto->sede_id;
-        $this->imageModel = $producto->imagen? $producto->image->url : null;;
+        $this->imageModel = $producto->image ? $producto->image->url : null;
+
 
         $this->dispatch('open-modal', 'modalProducto');
     }

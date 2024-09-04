@@ -4,6 +4,7 @@ namespace App\Livewire\Categoria;
 
 use Livewire\Component;
 use App\Models\Categorias;
+use App\Models\Productos;
 use Livewire\Attributes\Title;
 
 #[Title('Ver Categorias')]

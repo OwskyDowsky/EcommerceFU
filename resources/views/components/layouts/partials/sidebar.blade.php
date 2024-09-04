@@ -25,7 +25,7 @@
 
           <li class="nav-item">
               <a href="pages/widgets.html" class="nav-link">
-                <i class="fas fa-home"></i>
+                <i class="nav-icon fas fa-home"></i>
                 <p>
                   Inicio
                 </p>
@@ -36,34 +36,43 @@
             <a href="{{ route('categorias') }}" class="nav-link">
                 <i class="nav-icon fas fa-th-large"></i>
                 <p>
-                    Categorias
+                  Categorias
                 </p>
             </a>
           </li>
 
           <li class="nav-item">
             <a href="{{ route('proyectos') }}" class="nav-link">
-                <i class="fas fa-project-diagram"></i>
+                <i class="nav-icon fas fa-project-diagram"></i>
                 <p>
-                    Nuestros Proyectos
+                  Nuestros Proyectos
                 </p>
             </a>
           </li>
 
           <li class="nav-item">
             <a href="{{ route('sedes') }}" class="nav-link">
-                <i class="fas fa-map"></i>
+                <i class="nav-icon fas fa-map"></i>
                 <p>
-                    Sedes
+                  Sedes
                 </p>
             </a>
           </li>
 
           <li class="nav-item">
             <a href="{{ route('productos') }}" class="nav-link">
-                <i class="fas fa-shopping-cart"></i>
+                <i class="nav-icon fas fa-shopping-cart"></i>
                 <p>
-                    Productos
+                  Productos
+                </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ route('cupones') }}" class="nav-link">
+               <i class="nav-icon  fas fa-ticket-alt"></i>
+                <p>
+                  Cupones
                 </p>
             </a>
           </li>

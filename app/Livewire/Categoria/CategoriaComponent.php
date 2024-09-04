@@ -5,8 +5,9 @@ namespace App\Livewire\Categoria;
 use Livewire\Component;
 use App\Models\Categorias;
 use Livewire\Attributes\On;
-use Livewire\Attributes\Title;
 use Livewire\WithPagination;
+use Livewire\Attributes\Title;
+use Livewire\Attributes\Computed;
 
 #[Title('Categorias')]
 class CategoriaComponent extends Component
@@ -37,7 +38,6 @@ class CategoriaComponent extends Component
         ]);
     }
     public function mount(){
-        
     }
     public function create(){
         $this->Id=0;

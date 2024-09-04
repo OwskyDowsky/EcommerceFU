@@ -10,6 +10,10 @@ class Categorias extends Model
     use HasFactory;
     public function productos()
     {
-        return $this->hasMany(Productos::class); 
+        return $this->hasMany(Productos::class, 'categoria_id'); 
+    }
+    public function cupones()
+    {
+        return $this->hasMany(Cupones::class); 
     }
 }
