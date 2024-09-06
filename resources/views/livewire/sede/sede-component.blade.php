@@ -11,7 +11,6 @@
                 <th>ID</th>
                 <th>NOMBRE</th>
                 <th>UBICACION</th>
-                <th width="6%">VER</th>
                 <th width="6%">EDITAR</th>
                 <th width="6%">BORRAR</th>
 
@@ -22,11 +21,6 @@
                     <td>{{ $sede->id }}</td>
                     <td>{{ $sede->nombre }}</td>
                     <td>{{ $sede->ubicacion }}</td>
-                    <td>
-                        {{--<a href="{{route('productos.ver', $producto)}}" class="btn btn-success btn-sm" title="Ver">
-                            <i class="far fa-eye"></i>
-                        </a>--}}
-                    </td>
                     <td>
                         <a href="#" wire:click='edit({{$sede->id}})' class="btn btn-warning btn-sm" title="Editar">
                             <i class="far fa-edit"></i>

@@ -10,6 +10,10 @@ class Proyectos extends Model
     use HasFactory;
     public function proyectos()
     {
-        return $this->hasMany(Proyectos::class); 
+        return $this->hasMany(Proyectos::class);
+    }
+    public function productos()
+    {
+        return $this->hasMany(Productos::class, 'proyecto_id');
     }
 }

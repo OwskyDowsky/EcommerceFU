@@ -14,9 +14,9 @@ class ProyectoComponent extends Component
 {
     use WithPagination;
     use WithFileUploads;
-    public $search='';
-    public $totalRegistros=0;
-    public $cant=5;
+    public $search = '';
+    public $totalRegistros = 0;
+    public $cant = 5;
     //propiedad del modelo
     public $Id;
     public $nombre;
@@ -25,28 +25,29 @@ class ProyectoComponent extends Component
 
     public function render()
     {
-        if($this->search!=''){
+        if ($this->search != '') {
             $this->resetPage();
         }
         $this->totalRegistros = Proyectos::count();
-        $proyectos = Proyectos::where('nombre','like','%'.$this->search.'%')
-                        ->orderBy('id','desc')
-                        ->paginate($this->cant);
+        $proyectos = Proyectos::where('nombre', 'like', '%' . $this->search . '%')
+            ->orderBy('id', 'desc')
+            ->paginate($this->cant);
 
-        return view('livewire.proyecto.proyecto-component',[
+        return view('livewire.proyecto.proyecto-component', [
             'proyectos' => $proyectos
         ]);
     }
-    public function create(){
-        $this->Id=0;
+    public function create()
+    {
+        $this->Id = 0;
 
         $this->clean();
         $this->resetErrorBag();
-        $this->dispatch('open-modal','modalProyecto');
-        
+        $this->dispatch('open-modal', 'modalProyecto');
     }
     //crear proyecto
-    public function store(){
+    public function store()
+    {
         $rules = [
             'nombre' => 'required|min:3|max:30|unique:proyectos'
         ];
@@ -56,28 +57,30 @@ class ProyectoComponent extends Component
             'nombre.max' => 'El nombre solo puede tener 30 caracteres',
             'nombre.unique' => 'El nombre de la categoria ya existe'
         ];
-        $this->validate($rules,$messages);
+        $this->validate($rules, $messages);
 
         $proyecto = new Proyectos();
         $proyecto->nombre = $this->nombre;
         $proyecto->descripcion = $this->descripcion;
         $proyecto->save();
 
-        $this->dispatch('close-modal','modalProyecto');
-        $this->dispatch('msg','Proyecto cread0 correctamente');
+        $this->dispatch('close-modal', 'modalProyecto');
+        $this->dispatch('msg', 'Proyecto cread0 correctamente');
 
         $this->clean();
     }
-    public function edit(Proyectos $proyecto){
+    public function edit(Proyectos $proyecto)
+    {
         $this->clean();
         $this->Id = $proyecto->id;
         $this->nombre = $proyecto->nombre;
         $this->descripcion = $proyecto->descripcion;
-        $this->dispatch('open-modal','modalProyecto');
+        $this->dispatch('open-modal', 'modalProyecto');
     }
-    public function update(Proyectos $proyecto){
+    public function update(Proyectos $proyecto)
+    {
         $rules = [
-            'nombre' => 'required|min:3|max:30|unique:proyectos,id,'.$this->Id
+            'nombre' => 'required|min:3|max:30|unique:proyectos,id,' . $this->Id
         ];
         $messages = [
             'nombre.required' => 'El nombre es requerido',
@@ -85,39 +88,47 @@ class ProyectoComponent extends Component
             'nombre.max' => 'El nombre solo puede tener 30 caracteres',
             'nombre.unique' => 'El nombre de la categoria ya existe'
         ];
-        $this->validate($rules,$messages);
+        $this->validate($rules, $messages);
 
         $proyecto->nombre = $this->nombre;
         $proyecto->descripcion = $this->descripcion;
         $proyecto->update();
 
-        $this->dispatch('close-modal','modalProyecto');
-        $this->dispatch('msg','Proyecto editada correctamente');
+        $this->dispatch('close-modal', 'modalProyecto');
+        $this->dispatch('msg', 'Proyecto editada correctamente');
 
         $this->clean();
     }
     #[On('destroyProyecto')]
-    public function destroy($id){
+    public function destroy($id)
+    {
         $proyecto = Proyectos::findOrfail($id);
         $proyecto->delete();
 
-        $this->dispatch('msg','Proyecto Eliminada correctamente');
+        $this->dispatch('msg', 'Proyecto Eliminada correctamente');
     }
     // metodo limpieza
     public function clean()
     {
         $this->reset([
-            'nombre', 'Id', 'descripcion', 'estado',
+            'nombre',
+            'Id',
+            'descripcion',
+            'estado',
         ]);
         $this->resetErrorBag();
     }
 
     public function toggleEstado($proyectoId)
     {
-        $proyecto = Proyectos::find($proyectoId);
+        $proyecto = Proyectos::with('productos')->find($proyectoId);
         if ($proyecto) {
-            $proyecto->estado = $proyecto->estado === 'activo' ? 'inactivo' : 'activo';
-            $proyecto->save();
+            if ($proyecto->productos->count() > 0 && $proyecto->estado === 'activo') {
+                $this->dispatch('alertaProyectoConProductos');
+            } else {
+                $proyecto->estado = $proyecto->estado === 'activo' ? 'inactivo' : 'activo';
+                $proyecto->save();
+            }
         }
     }
 }

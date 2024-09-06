@@ -38,12 +38,16 @@ class ProductoComponent extends Component
 
     public function render()
     {
+        // Filtrar proyectos activos
+        $proyectosActivos = Proyectos::where('estado', 'activo')->get();
+
         $this->totalRegistros = Productos::count();
         $productos = Productos::where('nombre', 'like', '%' . $this->search . '%')
             ->orderBy('id', 'desc')
             ->paginate($this->cant);
         return view('livewire.producto.producto-component', [
-            'productos' => $productos
+            'productos' => $productos,
+            'proyectos' => $proyectosActivos     
         ]);
     }
     #[Computed()]

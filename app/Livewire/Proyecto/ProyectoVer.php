@@ -9,7 +9,7 @@ use Livewire\Component;
 #[Title('informacion proyectos')]
 class ProyectoVer extends Component
 {
-    public Proyectos $proyectos;
+    public Proyectos $proyecto;
 
     public function render()
     {

@@ -16,7 +16,6 @@
                 <th>FECHA DE CREACION</th>
                 <th>fECHA DE VENCIMIENTO</th>
                 <th>ESTADO</th>
-                <th width="6%">VER</th>
                 <th width="6%">EDITAR</th>
                 <th width="6%">BORRAR</th>
 
@@ -36,11 +35,6 @@
                             <input type="checkbox" class="custom-control-input" id="customSwitch{{ $cupon->id }}" wire:click="toggleEstado({{ $cupon->id }})" {{ $cupon->estado === 'activo' ? 'checked' : '' }}>
                             <label class="custom-control-label" for="customSwitch{{ $cupon->id }}">{{ $cupon->estado }}</label>
                         </div>
-                    </td>
-                    <td>
-                        {{--<a href="{{route('productos.ver', $producto)}}" class="btn btn-success btn-sm" title="Ver">
-                            <i class="far fa-eye"></i>
-                        </a>--}}
                     </td>
                     <td>
                         <a href="#" wire:click='edit({{$cupon->id}})' class="btn btn-warning btn-sm" title="Editar">
@@ -97,19 +91,22 @@
                         <div class="alert alert-danger w-100 mt-2">{{ $message }}</div>
                     @enderror
                 </div>
+                {{-- para seleccionar categorias multiplee --}}
                 <div class="form-group col-md-6">
-                    <label class="fas fa-globe" for="categoria_id"> Categoria del cupon:</label>
-                    <select wire:model="categoria_id" id="categoria_id" class="form-control">
-                        <option value="0">seleccionar</option>
-                        @foreach ($this->categorias as $categorias)
-                            <option value="{{ $categorias->id }}">{{ $categorias->nombre}}</option>
-                        @endforeach
-    
-                    </select>
+                    <label class="fas fa-file-signature" for="categoria_id"> Categoria del cupon:</label>
+                    <div class="ml-auto mr-1 mb-2" wire:ignore>
+                        <select class="form-control" id="selectcategoria2" multiple wire:model="categoria_id">
+                            <option value="" disabled selected>Selecciona la categoria</option>
+                            @foreach ($this->categorias as $categorias)
+                                <option value="{{ $categorias->id }}">{{ $categorias->nombre }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     @error('categoria_id')
                         <div class="alert alert-danger w-100 mt-2">{{ $message }}</div>
                     @enderror
                 </div>
+
                 <div class="form-group col-md-6">
                     <label class="fas fa-globe" for="producto_id"> Producto del cupon:</label>
                     <select wire:model="producto_id" id="producto_id" class="form-control">
@@ -130,4 +127,20 @@
         </form>
 
     </x-modal>
+    @section('styles')
+        <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+    @endsection
+    @section('js')
+        <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
+        <script>
+            $("#selectcategoria2").select2({
+                theme: "bootstrap4"
+            }).on('change', function(e) {
+                var data = $('#selectcategoria2').select2("val");
+                @this.set('categoria_id', data);
+            });
+        </script>
+    @endsection
+    
 </div>

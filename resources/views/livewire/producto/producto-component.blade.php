@@ -126,16 +126,15 @@
                 <div class="form-group col-md-4">
                     <label class="fas fa-globe" for="proyecto_id"> Proyecto:</label>
                     <select wire:model="proyecto_id" id="proyecto_id" class="form-control">
-                        <option value="0">seleccionar</option>
-                        @foreach ($this->proyectos as $proyectos)
-                            <option value="{{ $proyectos->id }}">{{ $proyectos->nombre }}</option>
+                        <option value="0">Seleccionar</option>
+                        @foreach ($proyectos as $proyecto)
+                            <option value="{{ $proyecto->id }}">{{ $proyecto->nombre }}</option>
                         @endforeach
-    
                     </select>
                     @error('proyecto_id')
                         <div class="alert alert-danger w-100 mt-2">{{ $message }}</div>
                     @enderror
-                </div>
+                </div>                
                 <div class="form-group col-md-4">
                     <label class="fas fa-globe" for="sede_id"> Sede:</label>
                     <select wire:model="sede_id" id="sede_id" class="form-control">
@@ -143,7 +142,7 @@
                         @foreach ($this->sedes as $sedes)
                             <option value="{{ $sedes->id }}">{{ $sedes->nombre }}</option>
                         @endforeach
-    
+
                     </select>
                     @error('sede_id')
                         <div class="alert alert-danger w-100 mt-2">{{ $message }}</div>
@@ -173,4 +172,5 @@
         </form>
 
     </x-modal>
+    
 </div>

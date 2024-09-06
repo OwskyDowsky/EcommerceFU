@@ -9,7 +9,6 @@
         <x-table>
             <x-slot:thead>
                 <th>ID</th>
-                <th><i class="fas fa-image"></i></th>
                 <th>NOMBRE</th>
                 <th>DESCRIPCION</th>
                 <th>ESTADO</th>
@@ -22,7 +21,6 @@
             @forelse ($proyectos as $proyecto)
                 <tr>
                     <td>{{ $proyecto->id }}</td>
-                    <td></td>
                     <td>{{ $proyecto->nombre }}</td>
                     <td>{{ $proyecto->descripcion }}</td>
                     <td>

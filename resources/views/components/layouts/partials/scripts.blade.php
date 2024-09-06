@@ -10,3 +10,7 @@
 <!-- PLUGINS -->
 <!-- sweetalert -->
 <script src="{{asset('plugins/sweetalert2/sweetalert2.js')}}"></script>
+<!-- select2 -->
+<script src="{{asset('plugins/select2/js/select2.min.js')}}"><script>
+<script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
+@yield('js')

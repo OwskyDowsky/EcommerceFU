@@ -11,6 +11,7 @@
                 <th>ID</th>
                 <th>NOMBRE</th>
                 <th>DESCRIPCION</th>
+                <th>ESTADO</th>
                 <th width="6%">VER</th>
                 <th width="6%">EDITAR</th>
                 <th width="6%">BORRAR</th>
@@ -22,6 +23,12 @@
                     <td>{{ $categoria->id }}</td>
                     <td>{{ $categoria->nombre }}</td>
                     <td>{{ $categoria->descripcion }}</td>
+                    <td>
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitch{{ $categoria->id }}" wire:click="toggleEstado({{ $categoria->id }})" {{ $categoria->estado === 'activo' ? 'checked' : '' }}>
+                            <label class="custom-control-label" for="customSwitch{{ $categoria->id }}">{{ $categoria->estado }}</label>
+                        </div>
+                    </td>
                     <td>
                         <a href="{{route('categorias.ver', $categoria)}}" class="btn btn-success btn-sm" title="Ver">
                             <i class="far fa-eye"></i>

@@ -119,4 +119,16 @@ class CategoriaComponent extends Component
         ]);
         $this->resetErrorBag();
     }
+    public function toggleEstado($categoriaId)
+    {
+        $categoria = Categorias::with('productos')->find($categoriaId);
+        if ($categoria) {
+            if ($categoria->productos->count() > 0 && $categoria->estado === 'activo') {
+                $this->dispatch('alertaCategoriaConProductos');
+            } else {
+                $categoria->estado = $categoria->estado === 'activo' ? 'inactivo' : 'activo';
+                $categoria->save();
+            }
+        }
+    }
 }
