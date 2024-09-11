@@ -86,7 +86,12 @@ class ProductoComponent extends Component
             'nombre.required' => 'El nombre es requerido',
             'nombre.min' => 'El nombre debe tener minimo 3 caracteres',
             'nombre.max' => 'El nombre solo puede tener 80 caracteres',
-            'nombre.unique' => 'El nombre de la categoria ya existe'
+            'nombre.unique' => 'El nombre de la categoria ya existe',
+            'descripcion.max' => 'La descripción solo puede tener 250 caracteres',
+            'precio.required' => 'El precio es requerido',
+            'precio.numeric' => 'El precio debe ser numerico',
+            'image.image' => 'Debe ser un formato de imagen valido',
+            'image.max' => 'El tamaño de la imagen debe ser de 3 MB como máximo',
         ];
         $this->validate($rules, $messages);
         $producto = new Productos();
@@ -135,6 +140,17 @@ class ProductoComponent extends Component
             'descripcion' => 'max:250',
             'precio' => 'required|numeric',
             'image' => 'image|max:3024|nullable',
+        ];
+        $messages = [
+            'nombre.required' => 'El nombre es requerido',
+            'nombre.min' => 'El nombre debe tener minimo 3 caracteres',
+            'nombre.max' => 'El nombre solo puede tener 80 caracteres',
+            'nombre.unique' => 'El nombre de la categoria ya existe',
+            'descripcion.max' => 'La descripción solo puede tener 250 caracteres',
+            'precio.required' => 'El precio es requerido',
+            'precio.numeric' => 'El precio debe ser numerico',
+            'image.image' => 'Debe ser un formato de imagen valido',
+            'image.max' => 'El tamaño de la imagen debe ser de 3 MB como máximo',
         ];
         $this->validate($rules);
 

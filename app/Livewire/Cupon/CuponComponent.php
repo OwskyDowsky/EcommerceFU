@@ -23,8 +23,9 @@ class CuponComponent extends Component
     public $nombre;
     public $descuento;
     public $fecha_vencimiento;
-    public $categoria_id;
-    public $producto_id;
+    public $categoria_id = [];
+    public $producto_id = [];
+    public $tipo_cupon;
 
     public function render()
     {
@@ -58,77 +59,105 @@ class CuponComponent extends Component
     {
         $rules = [
             'nombre' => 'required|min:3|max:80|unique:cupones',
+            'descuento' => 'required|numeric|min:1|max:100',
+            'fecha_vencimiento' => 'required|date',
+            'categoria_id' => 'array',
+            'producto_id' => 'array',
         ];
         $messages = [
             'nombre.required' => 'El nombre es requerido',
             'nombre.min' => 'El nombre debe tener minimo 3 caracteres',
             'nombre.max' => 'El nombre solo puede tener 80 caracteres',
-            'nombre.unique' => 'El nombre de la categoria ya existe'
+            'nombre.unique' => 'El nombre del cupon ya existe',
+            'descuento.required' => 'El descuento es requerido',
+            'descuento.numeric' => 'El descuento debe ser numerico',
+            'descuento.min' => 'El descuento debe ser minimo 1 caracteres',
+            'descuento.max' => 'El descuento debe ser máximo 100 caracteres',
+            'fecha_vencimiento.required' => 'La fecha de vencimiento es requerida',
+            'fecha_vencimiento.date' => 'La fecha de vencimiento debe ser de tipo fecha',
         ];
-        $this->validate($rules, $messages);
+        $this->validate($rules);
+    
+        // Crear cupón manualmente
         $cupon = new Cupones();
-
         $cupon->nombre = $this->nombre;
         $cupon->descuento = $this->descuento;
         $cupon->fecha_vencimiento = $this->fecha_vencimiento;
-        $cupon->categoria_id = $this->categoria_id;
-        $cupon->producto_id = $this->producto_id;
         $cupon->save();
-
-        /*if ($this->image) {
-            $customName = 'tours/' . uniqid() . '.' . $this->image->extension();
-            $this->image->storeAs('public', $customName);
-            $tours->image()->create(['url' => $customName]);
-        }*/
-
+    
+        // Sincronizar categorías y productos
+        $cupon->categorias()->sync($this->categoria_id);
+        $cupon->productos()->sync($this->producto_id);
+    
+        // Mensaje y limpieza
         $this->dispatch('close-modal', 'modalCupon');
-        $this->dispatch('msg', 'Cupon creado con exito');
+        $this->dispatch('msg', 'Cupón creado con éxito');
         $this->clean();
     }
+
     public function edit(Cupones $cupon)
     {
         //agrege el reset
         $this->clean();
+    
+        // Asignar datos del cupón
         $this->Id = $cupon->id;
         $this->nombre = $cupon->nombre;
         $this->descuento = $cupon->descuento;
         $this->fecha_vencimiento = $cupon->fecha_vencimiento;
-        $this->categoria_id = $cupon->categoria_id;
-        $this->producto_id = $cupon->producto_id;
-        //$this->imageModel = $tour->imagen;
+        $this->categoria_id = $cupon->categorias->pluck('id')->toArray();
+        $this->producto_id = $cupon->productos->pluck('id')->toArray();
+        
+        // Determinar tipo de cupón
+        if (!empty($this->categoria_id)) {
+            $this->tipo_cupon = 0; // Por categoría
+        } elseif (!empty($this->producto_id)) {
+            $this->tipo_cupon = 1; // Por producto
+        }
 
+        // Abrir modal para editar
         $this->dispatch('open-modal', 'modalCupon');
     }
     public function update(Cupones $cupon)
     {
         $rules = [
-            'nombre' => 'required|min:3|max:80|unique:cupones,id,' . $this->Id,
+            'nombre' => 'required|min:3|max:80|unique:cupones,nombre,' . $this->Id,
+            'descuento' => 'required|numeric|min:1|max:100',
+            'fecha_vencimiento' => 'required|date',
+            'categoria_id' => 'array',
+            'producto_id' => 'array',
+        ];
+        $messages = [
+            'nombre.required' => 'El nombre es requerido',
+            'nombre.min' => 'El nombre debe tener minimo 3 caracteres',
+            'nombre.max' => 'El nombre solo puede tener 80 caracteres',
+            'nombre.unique' => 'El nombre del cupon ya existe',
+            'descuento.required' => 'El descuento es requerido',
+            'descuento.numeric' => 'El descuento debe ser numerico',
+            'descuento.min' => 'El descuento debe ser minimo 1 caracteres',
+            'descuento.max' => 'El descuento debe ser máximo 100 caracteres',
+            'fecha_vencimiento.required' => 'La fecha de vencimiento es requerida',
+            'fecha_vencimiento.date' => 'La fecha de vencimiento debe ser de tipo fecha',
         ];
         $this->validate($rules);
 
-        $cupon->nombre = $this->nombre;
-        $cupon->descuento = $this->descuento;
-        $cupon->fecha_vencimiento = $this->fecha_vencimiento;
-        $cupon->categoria_id = $this->categoria_id;
-        $cupon->producto_id = $this->producto_id;
-        //$tour->imageModel = $this->imagen;
+        // Actualizar cupón
+        $cupon->update([
+            'nombre' => $this->nombre,
+            'descuento' => $this->descuento,
+            'fecha_vencimiento' => $this->fecha_vencimiento,
+            'producto_id' => $this->producto_id, 
+        ]);
 
-        $cupon->update();
-        /*if ($this->image) {
-            if ($producto->image != null) {
-                Storage::delete('public/' . $tour->image->url);
-                $tour->image()->delete();
-            }
-            $customName = 'tours/' . uniqid() . '.' . $this->image->extension();
-            $this->image->storeAs('public', $customName);
-            $tour->image()->create(['url' => $customName]);
-        }*/
+        // Actualizar las categorías en la tabla intermedia
+        $cupon->categorias()->sync($this->categoria_id);
 
+        // Mensaje y limpieza
         $this->dispatch('close-modal', 'modalCupon');
-        $this->dispatch('msg', 'Cupon editada correctamente');
-
+        $this->dispatch('msg', 'Cupón actualizado correctamente');
         $this->clean();
     }
+
     #[On('destroyCupon')]
     public function destroy($id)
     {
@@ -154,4 +183,13 @@ class CuponComponent extends Component
         }
     }
     
+    // Resetear categorías y productos dependiendo del tipo de cupón seleccionado
+    public function updatedTipoCupon($value)
+    {
+        if ($value == 0) {
+            $this->producto_id = [];
+        } elseif ($value == 1) {
+            $this->categoria_id = [];
+        }
+    }
 }

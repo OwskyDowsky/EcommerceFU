@@ -12,8 +12,13 @@ class Cupones extends Model
     {
         return $this->belongsTo(Categorias::class); 
     }
-    public function producto()
+    public function productos()
     {
-        return $this->belongsTo(Productos::class); 
+        return $this->belongsToMany(Productos::class, 'producto_cupon', 'cupon_id', 'producto_id');
+    }
+
+    public function categorias()
+    {
+        return $this->belongsToMany(Categorias::class, 'categoria_cupon', 'cupon_id', 'categoria_id');
     }
 }

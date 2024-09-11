@@ -14,7 +14,7 @@
                 <th>CATEGORIA</th>
                 <th>PRODUCTO</th>
                 <th>FECHA DE CREACION</th>
-                <th>fECHA DE VENCIMIENTO</th>
+                <th>FECHA DE VENCIMIENTO</th>
                 <th>ESTADO</th>
                 <th width="6%">EDITAR</th>
                 <th width="6%">BORRAR</th>
@@ -26,8 +26,19 @@
                     <td>{{ $cupon->id }}</td>
                     <td>{{ $cupon->nombre }}</td>
                     <td>{{ $cupon->descuento }} %</td>
-                    <td>{{ optional($cupon->categoria)->nombre }}</td>
-                    <td>{{ optional($cupon->producto)->nombre }}</td>
+                    <td>
+                        @foreach($cupon->categorias as $categoria)
+                            <span>{{ $categoria->nombre }}</span>
+                            @if (!$loop->last), @endif
+                        @endforeach
+                    </td>
+                    <td>
+                        @foreach($cupon->productos as $producto)
+                            <span>{{ $producto->nombre }}</span>
+                            @if (!$loop->last), @endif
+                        @endforeach
+                    </td>
+                    <!-- <td>{{ optional($cupon->producto)->nombre }}</td> -->
                     <td>{{ $cupon->created_at }}</td>
                     <td>{{ $cupon->fecha_vencimiento }}</td>
                     <td>
@@ -91,12 +102,20 @@
                         <div class="alert alert-danger w-100 mt-2">{{ $message }}</div>
                     @enderror
                 </div>
-                {{-- para seleccionar categorias multiplee --}}
-                <div class="form-group col-md-6">
-                    <label class="fas fa-file-signature" for="categoria_id"> Categoria del cupon:</label>
-                    <div class="ml-auto mr-1 mb-2" wire:ignore>
+                <div class="form-group col-md-12">
+                    <label class="fas fa-globe" for="tipo_cupon">Tipo de cupon:</label>
+                    <select id="tipo_cupon" class="form-control">
+                        <option disabled selected>Seleccionar</option>
+                        <option value="0">Por categoría</option>
+                        <option value="1">Por producto</option>
+                    </select>
+                </div>                               
+                {{-- Selector para categorías --}}
+                <div id="select_categoria" class="form-group col-md-12" style="display:none;" wire:ignore>
+                    <label class="fas fa-file-signature" for="categoria_id">Categoría del cupón:</label>
+                    <div class="ml-auto mr-1 mb-2" >
                         <select class="form-control" id="selectcategoria2" multiple wire:model="categoria_id">
-                            <option value="" disabled selected>Selecciona la categoria</option>
+                            <option value="" disabled selected>Selecciona la categoría</option>
                             @foreach ($this->categorias as $categorias)
                                 <option value="{{ $categorias->id }}">{{ $categorias->nombre }}</option>
                             @endforeach
@@ -107,6 +126,23 @@
                     @enderror
                 </div>
 
+                {{-- Selector para productos --}}
+                <div id="select_producto" class="form-group col-md-12" style="display:none;" wire:ignore>
+                    <label class="fas fa-file-signature" for="producto_id">Producto del cupón:</label>
+                    <div class="ml-auto mr-1 mb-2">
+                        <select class="form-control" id="selectproducto2" multiple wire:model="producto_id">
+                            <option value="" disabled selected>Selecciona el producto</option>
+                            @foreach ($this->productos as $productos)
+                                <option value="{{ $productos->id }}">{{ $productos->nombre }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @error('producto_id')
+                        <div class="alert alert-danger w-100 mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                {{--  
                 <div class="form-group col-md-6">
                     <label class="fas fa-globe" for="producto_id"> Producto del cupon:</label>
                     <select wire:model="producto_id" id="producto_id" class="form-control">
@@ -120,6 +156,7 @@
                         <div class="alert alert-danger w-100 mt-2">{{ $message }}</div>
                     @enderror
                 </div>
+                --}}
             </div>
 
             <hr>
@@ -134,11 +171,49 @@
     @section('js')
         <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
         <script>
-            $("#selectcategoria2").select2({
-                theme: "bootstrap4"
-            }).on('change', function(e) {
-                var data = $('#selectcategoria2').select2("val");
-                @this.set('categoria_id', data);
+            document.getElementById('tipo_cupon').addEventListener('change', function () {
+                var tipoCupon = this.value;
+
+                // Ocultar ambos selectores inicialmente
+                document.getElementById('select_categoria').style.display = 'none';
+                document.getElementById('select_producto').style.display = 'none';
+
+                // Resetear los selectores al cambiar el tipo de cupón
+                if (tipoCupon == '0') {
+                    // Mostrar el selector de categorías
+                    document.getElementById('select_categoria').style.display = 'block';
+                    
+                    // Resetear el selector de productos
+                    $('#selectproducto2').val(null).trigger('change'); // Resetea select2 de productos
+                    @this.set('producto_id', []); // Limpiar productos en Livewire
+                    
+                } else if (tipoCupon == '1') {
+                    // Mostrar el selector de productos
+                    document.getElementById('select_producto').style.display = 'block';
+
+                    // Resetear el selector de categorías
+                    $('#selectcategoria2').val(null).trigger('change'); // Resetea select2 de categorías
+                    @this.set('categoria_id', []); // Limpiar categorías en Livewire
+                }
+            });
+        </script>
+        
+        <script>
+            // Inicializar select2
+            $(document).ready(function() {
+                $('#selectcategoria2').select2({
+                    theme: "bootstrap4"
+                }).on('change', function(e) {
+                    var data = $(this).select2("val");
+                    @this.set('categoria_id', data);
+                });
+        
+                $('#selectproducto2').select2({
+                    theme: "bootstrap4"
+                }).on('change', function(e) {
+                    var data = $(this).select2("val");
+                    @this.set('producto_id', data);
+                });
             });
         </script>
     @endsection
