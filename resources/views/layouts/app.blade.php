@@ -17,11 +17,12 @@
     {{--@vite(['resources/sass/app.scss', 'resources/js/app.js'])--}}
     <link rel="stylesheet" href="{{asset('css/bootstrap@5.3.2.min.css')}}">
 </head>
-<body>
+<body style="background-color: #34b4e4;">
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md shadow-sm" style="background-color: #34b4e4;">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ url('/') }}" style="color: white">
+                    <img src="storage/fu/LOGO - FUNDACIÓN UNIFRANZ-05.png" alt="" style="max-width: 120px">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -40,7 +41,7 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a style="color: white" class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
 
@@ -72,8 +73,11 @@
                 </div>
             </div>
         </nav>
-
-        <main class="py-4">
+        <div style="text-align: center;">
+            <img src="storage/fu/LOGO - FUNDACIÓN UNIFRANZ-02.png" alt="" style="max-width: 350px; display: inline-block; margin-top: -30px; 
+            margin-bottom: -40px">
+        </div>
+        <main class="py-2">
             @yield('content')
         </main>
     </div>
