@@ -9,6 +9,7 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
+use Spatie\Permission\Models\Role;
 
 #[Title('Lista de Usuarios')]
 class UserComponent extends Component
@@ -31,6 +32,9 @@ class UserComponent extends Component
     public $image;
     public $imageModel;
     public $re_password;
+    public $roles;  // Para almacenar los roles disponibles
+    public $selectedRole; // Para almacenar el rol seleccionado
+    public $userId; // Para almacenar el usuario al que se le asignará el rol
 
     public function render()
 
@@ -42,6 +46,11 @@ class UserComponent extends Component
         return view('livewire.user.user-component', [
             'users' => $users
         ]);
+    }
+
+    public function mount()
+    {
+        $this->roles = Role::all();
     }
 
     public function create()
@@ -63,6 +72,7 @@ class UserComponent extends Component
             'password' => 'required|min:8',
             're_password' => 'required|same:password',
             'image' => 'image|max:1024|nullable',
+            'selectedRole' => 'required',
         ];
         $messages = [
             'name.required' => 'El nombre es requerido',
@@ -76,21 +86,26 @@ class UserComponent extends Component
         $user->apellido_paterno = $this->apellido_paterno;
         $user->ci = $this->ci;
         $user->email = $this->email;
-        $user->password = $this->password;
+        $user->password = bcrypt($this->password); // Encriptar la contraseña
         $user->estado = $this->estado;
         $user->save();
 
+        // Asignar rol al usuario
+        $user->assignRole($this->selectedRole);
+
+        // Subir imagen si existe
         if ($this->image) {
             $customName = 'users/' . uniqid() . '.' . $this->image->extension();
             $this->image->storeAs('public', $customName);
             $user->image()->create(['url' => $customName]);
         }
 
-        // $customName = null;
-        $this->dispatch('close-modal', 'modalUser');
-        $this->dispatch('msg', 'Usuario creado con exito');
+        // Limpiar formulario y cerrar modal
         $this->clean();
+        $this->dispatch('close-modal', 'modalUser');
+        $this->dispatch('msg', 'Usuario creado con éxito');
     }
+    
     public function edit(User $user)
     {
         $this->clean();
@@ -115,7 +130,6 @@ class UserComponent extends Component
             'password' => 'min:8|nullable',
             're_password' => 'same:password',
             'image' => 'image|max:1024|nullable',
-            
         ];
         $this->validate($rules);
 
@@ -162,11 +176,12 @@ class UserComponent extends Component
     public function clean()
     {
         $this->reset([
-            'name','apellido_paterno', 'Id', 'ci', 'email', 'password',
-            'estado', 'image','imageModel', 
+            'name', 'apellido_paterno', 'Id', 'ci', 'email', 'password', 'estado', 'image', 
+            'imageModel', 'selectedRole'
         ]);
         $this->resetErrorBag();
     }
+
     public function toggleEstado($userId)
     {
         $user = User::find($userId);
@@ -174,5 +189,21 @@ class UserComponent extends Component
             $user->estado = $user->estado === 'activo' ? 'inactivo' : 'activo';
             $user->save();
         }
+    }
+
+    public function openRoleModal($userId)
+    {
+        $this->userId = $userId;
+        $this->dispatch('open-modal', 'modalRoles');
+    }
+
+    public function assignRole()
+    {
+        $user = User::find($this->userId);
+        if ($user && $this->selectedRole) {
+            $user->syncRoles($this->selectedRole); // Asigna el rol al usuario
+            $this->dispatch('msg', 'Rol asignado correctamente');
+        }
+        $this->dispatch('close-modal', 'modalRoles');
     }
 }

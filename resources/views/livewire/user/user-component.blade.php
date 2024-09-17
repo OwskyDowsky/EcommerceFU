@@ -42,10 +42,10 @@
                         </div>
                     </td>
                     <td>
-                        <a href="#" class="btn btn-info btn-sm" title="Roles">
+                        <a href="#" class="btn btn-info btn-sm" title="Roles" wire:click='openRoleModal({{ $user->id }})'>
                             <i class="fas fa-user-tag"></i>
                         </a>
-                    </td>
+                    </td>                    
                     <td>
                         <a href="{{ route('users.ver', $user) }}" class="btn btn-success btn-sm" title="Ver">
                             <i class="far fa-eye"></i>
@@ -138,6 +138,18 @@
                         <div class="alert alert-danger w-100 mt-2">{{ $message }}</div>
                     @enderror
                 </div>
+                <div class="form-group col-4">
+                    <label class="fas fa-file-signature" for="selectedRole"> Rol:</label>
+                    <select wire:model='selectedRole' class="form-control" id="selectedRole">
+                    <option value="" disabled selected>Selecciona un rol</option>
+                        @foreach($roles as $role)
+                            <option value="{{ $role->name }}">{{ $role->name }}</option>
+                        @endforeach
+                    </select>
+                    @error('selectedRole')
+                        <div class="alert alert-danger w-100 mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
                 {{-- imagen --}}
                 <div class="form-group col-md-12">
                     <label for="image"> Imagen:</label>
@@ -157,5 +169,20 @@
             <button class="btn btn-primary float-right">{{ $Id == 0 ? 'Guardar' : 'Editar' }}</button>
         </form>
     </x-modal>
+
+    {{-- Modal Roles --}}
+    <x-modal modalId="modalRoles" modalTitle="Asignar Rol" modalSize="modal-md">
+        <div class="form-group">
+            <label for="role">Selecciona un rol:</label>
+            <select wire:model="selectedRole" class="form-control">
+                <option value="" disabled selected>Seleccione un rol</option>
+                @foreach ($roles as $role)
+                    <option value="{{ $role->name }}">{{ $role->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <button wire:click="assignRole" class="btn btn-primary">Asignar Rol</button>
+    </x-modal>
+    
 
 </div>

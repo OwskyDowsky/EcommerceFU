@@ -31,7 +31,7 @@
                 </p>
               </a>
           </li>
-
+          @can('Categoria ver')
           <li class="nav-item">
             <a href="{{ route('categorias') }}" class="nav-link">
                 <i class="nav-icon fas fa-th-large"></i>
@@ -40,7 +40,9 @@
                 </p>
             </a>
           </li>
+          @endcan
 
+          @can('Proyecto ver')
           <li class="nav-item">
             <a href="{{ route('proyectos') }}" class="nav-link">
                 <i class="nav-icon fas fa-project-diagram"></i>
@@ -49,7 +51,9 @@
                 </p>
             </a>
           </li>
+          @endcan
 
+          @can('Sede ver')
           <li class="nav-item">
             <a href="{{ route('sedes') }}" class="nav-link">
                 <i class="nav-icon fas fa-map"></i>
@@ -58,7 +62,9 @@
                 </p>
             </a>
           </li>
+          @endcan
 
+          @can('Producto ver')
           <li class="nav-item">
             <a href="{{ route('productos') }}" class="nav-link">
                 <i class="nav-icon fas fa-shopping-cart"></i>
@@ -67,7 +73,9 @@
                 </p>
             </a>
           </li>
+          @endcan
 
+          @can('Cupon ver')
           <li class="nav-item">
             <a href="{{ route('cupones') }}" class="nav-link">
                <i class="nav-icon  fas fa-ticket-alt"></i>
@@ -76,7 +84,9 @@
                 </p>
             </a>
           </li>
+          @endcan
 
+          @can('Usuario ver')
           <li class="nav-item">
             <a href="{{ route('usuarios') }}" class="nav-link">
                <i class="nav-icon  fas fa-users"></i>
@@ -85,7 +95,9 @@
                 </p>
             </a>
           </li>
+          @endcan
 
+          @can('Rol ver')
           <li class="nav-item">
             <a href="{{ route('roles') }}" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
@@ -94,7 +106,9 @@
               </p>
             </a>
           </li>
+          @endcan
 
+          @can('Permiso ver')
           <li class="nav-item">
             <a href="{{ route('permisos') }}" class="nav-link">
               <i class="nav-icon fas fa-user-times"></i>
@@ -103,6 +117,7 @@
               </p>
             </a>
           </li>
+          @endcan
 
         </ul>
       </nav>
