@@ -1,9 +1,11 @@
 <div>
     <x-card cardTitle="Lista de Sedes ({{ $this->totalRegistros }})" cardTools="card tools">
         <x-slot:cardTools>
+            @can('Sede crear')
             <a href="#" class="btn btn-primary" wire:click='create'>
                 <i
                     class="fas fa-plus-circle"></i> Agregar una sede</a>
+            @endcan
         </x-slot:cardTools>
 
         <x-table>
@@ -11,8 +13,12 @@
                 <th>ID</th>
                 <th>NOMBRE</th>
                 <th>UBICACION</th>
+                @can('Sede editar')
                 <th width="6%">EDITAR</th>
+                @endcan
+                @can('Sede eliminar')
                 <th width="6%">BORRAR</th>
+                @endcan
 
             </x-slot>
 
@@ -21,17 +27,21 @@
                     <td>{{ $sede->id }}</td>
                     <td>{{ $sede->nombre }}</td>
                     <td>{{ $sede->ubicacion }}</td>
+                    @can('Sede editar')
                     <td>
                         <a href="#" wire:click='edit({{$sede->id}})' class="btn btn-warning btn-sm" title="Editar">
                             <i class="far fa-edit"></i>
                         </a>
                     </td>
+                    @endcan
+                    @can('Sede eliminar')
                     <td>
                         <a wire:click="$dispatch('delete',{id: {{$sede->id}},
                         eventNombre: 'destroySede'})" class="btn btn-danger btn-sm" title="Eliminar">
                             <i class="fas fa-trash-alt"></i>
                         </a>
                     </td>
+                    @endcan
                 </tr>
 
             @empty

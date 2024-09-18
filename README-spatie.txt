@@ -37,3 +37,7 @@ php artisan make:seeder PermissionSeeder
 Ejecutar lo siguiente:
 php artisan db:seed --class=PermissionSeeder
 
+
+Fijarse los seeders
+
+Migrar los seeders 

@@ -1,9 +1,11 @@
 <div>
     <x-card cardTitle="Lista Usuarios ({{ $this->totalRegistros }})">
         <x-slot:cardTools>
+            @can('Usuario crear')
             <a href="#" class="btn btn-primary" wire:click='create'>
                 <i class="fas fa-plus-circle"></i> Agregar Usuario
             </a>
+            @endcan
         </x-slot>
 
         <x-table>
@@ -14,11 +16,17 @@
                 <th>NOMBRE</th>
                 <th>APELLIDO</th>
                 <th>EMAIL</th>
+                @can('Usuario baja')
                 <th>ESTADO</th>
-                <th width="6%">ROLES</th>
+                @endcan
                 <th width="6%">VER</th>
+                @can('Usuario editar')
+                <th width="6%">ROLES</th>
                 <th width="6%">EDITAR</th>
+                @endcan
+                @can('Usuario eliminar')
                 <th width="6%">BORRAR</th>
+                @endcan
 
             </x-slot>
 
@@ -32,6 +40,7 @@
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->apellido_paterno }}</td>
                     <td>{{ $user->email }}</td>
+                    @can('Usuario baja')
                     <td>
                         <div class="custom-control custom-switch">
                             <input type="checkbox" class="custom-control-input" id="customSwitch{{ $user->id }}"
@@ -41,22 +50,26 @@
                                 for="customSwitch{{ $user->id }}">{{ $user->estado }}</label>
                         </div>
                     </td>
-                    <td>
-                        <a href="#" class="btn btn-info btn-sm" title="Roles" wire:click='openRoleModal({{ $user->id }})'>
-                            <i class="fas fa-user-tag"></i>
-                        </a>
-                    </td>                    
+                    @endcan                 
                     <td>
                         <a href="{{ route('users.ver', $user) }}" class="btn btn-success btn-sm" title="Ver">
                             <i class="far fa-eye"></i>
                         </a>
                     </td>
+                    @can('Usuario editar')
+                    <td>
+                        <a href="#" class="btn btn-info btn-sm" title="Roles" wire:click='openRoleModal({{ $user->id }})'>
+                            <i class="fas fa-user-tag"></i>
+                        </a>
+                    </td>   
                     <td>
                         <a href="#" wire:click='edit({{ $user->id }})' class="btn btn-warning btn-sm"
                             title="Editar">
                             <i class="far fa-edit"></i>
                         </a>
                     </td>
+                    @endcan
+                    @can('Usuario eliminar')
                     <td>
                         <a wire:click="$dispatch('delete',{id: {{ $user->id }},
                         eventNombre: 'destroyUser'})"
@@ -64,6 +77,7 @@
                             <i class="fas fa-trash-alt"></i>
                         </a>
                     </td>
+                    @endcan
                 </tr>
 
             @empty

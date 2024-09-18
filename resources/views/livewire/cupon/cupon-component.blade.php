@@ -1,9 +1,11 @@
 <div>
     <x-card cardTitle="Lista de cupones ({{ $this->totalRegistros }})" cardTools="card tools">
         <x-slot:cardTools>
+            @can('Cupon crear')
             <a href="#" class="btn btn-primary" wire:click='create'>
                 <i
                     class="fas fa-plus-circle"></i> Crear un cupon</a>
+            @endcan
         </x-slot:cardTools>
 
         <x-table>
@@ -15,9 +17,15 @@
                 <th>PRODUCTO</th>
                 <th>FECHA DE CREACION</th>
                 <th>FECHA DE VENCIMIENTO</th>
+                @can('Cupon baja')
                 <th>ESTADO</th>
+                @endcan
+                @can('Cupon editar')
                 <th width="6%">EDITAR</th>
+                @endcan
+                @can('Cupon eliminar')
                 <th width="6%">BORRAR</th>
+                @endcan
 
             </x-slot>
 
@@ -41,23 +49,29 @@
                     <!-- <td>{{ optional($cupon->producto)->nombre }}</td> -->
                     <td>{{ $cupon->created_at }}</td>
                     <td>{{ $cupon->fecha_vencimiento }}</td>
+                    @can('Cupon baja')
                     <td>
                         <div class="custom-control custom-switch">
                             <input type="checkbox" class="custom-control-input" id="customSwitch{{ $cupon->id }}" wire:click="toggleEstado({{ $cupon->id }})" {{ $cupon->estado === 'activo' ? 'checked' : '' }}>
                             <label class="custom-control-label" for="customSwitch{{ $cupon->id }}">{{ $cupon->estado }}</label>
                         </div>
                     </td>
+                    @endcan
+                    @can('Cupon editar')
                     <td>
                         <a href="#" wire:click='edit({{$cupon->id}})' class="btn btn-warning btn-sm" title="Editar">
                             <i class="far fa-edit"></i>
                         </a>
                     </td>
+                    @endcan
+                    @can('Cupon eliminar')
                     <td>
                         <a wire:click="$dispatch('delete',{id: {{$cupon->id}},
                         eventNombre: 'destroyCupon'})" class="btn btn-danger btn-sm" title="Eliminar">
                             <i class="fas fa-trash-alt"></i>
                         </a>
                     </td>
+                    @endcan
                 </tr>
 
             @empty

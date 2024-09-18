@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 
@@ -28,10 +27,15 @@ class PermissionSeeder extends Seeder
         // Define los tipos de acciones (permisos) para cada entidad
         $actions = ['ver', 'crear', 'editar', 'eliminar', 'baja'];
 
-        // Itera sobre cada entidad y acción, creando los permisos correspondientes
+        // Itera sobre cada entidad y acción, creando los permisos correspondientes si no existen
         foreach ($entities as $entity) {
             foreach ($actions as $action) {
-                Permission::create(['name' => "{$entity} {$action}"]);
+                $permissionName = "{$entity} {$action}";
+
+                // Verifica si el permiso ya existe antes de crearlo
+                if (!Permission::where('name', $permissionName)->exists()) {
+                    Permission::create(['name' => $permissionName]);
+                }
             }
         }
     }

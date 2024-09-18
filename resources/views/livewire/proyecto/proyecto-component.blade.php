@@ -1,9 +1,11 @@
 <div>
     <x-card cardTitle="Lista de proyectos ({{ $this->totalRegistros }})" cardTools="card tools">
         <x-slot:cardTools>
+            @can('Proyecto crear')
             <a href="#" class="btn btn-primary" wire:click='create'>
                 <i
                     class="fas fa-plus-circle"></i> Agregar Nuevo</a>
+            @endcan
         </x-slot:cardTools>
 
         <x-table>
@@ -11,10 +13,16 @@
                 <th>ID</th>
                 <th>NOMBRE</th>
                 <th>DESCRIPCION</th>
+                @can('Proyecto baja')
                 <th>ESTADO</th>
+                @endcan
                 <th width="6%">VER</th>
+                @can('Proyecto editar')
                 <th width="6%">EDITAR</th>
+                @endcan
+                @can('Proyecto eliminar')
                 <th width="6%">BORRAR</th>
+                @endcan
 
             </x-slot>
 
@@ -23,28 +31,34 @@
                     <td>{{ $proyecto->id }}</td>
                     <td>{{ $proyecto->nombre }}</td>
                     <td>{{ $proyecto->descripcion }}</td>
+                    @can('Proyecto baja')
                     <td>
                         <div class="custom-control custom-switch">
                             <input type="checkbox" class="custom-control-input" id="customSwitch{{ $proyecto->id }}" wire:click="toggleEstado({{ $proyecto->id }})" {{ $proyecto->estado === 'activo' ? 'checked' : '' }}>
                             <label class="custom-control-label" for="customSwitch{{ $proyecto->id }}">{{ $proyecto->estado }}</label>
                         </div>
                     </td>
+                    @endcan
                     <td>
                         <a href="{{route('proyectos.ver', $proyecto)}}" class="btn btn-success btn-sm" title="Ver">
                             <i class="far fa-eye"></i>
                         </a>
                     </td>
+                    @can('Proyecto editar')
                     <td>
                         <a href="#" wire:click='edit({{$proyecto->id}})' class="btn btn-warning btn-sm" title="Editar">
                             <i class="far fa-edit"></i>
                         </a>
                     </td>
+                    @endcan
+                    @can('Proyecto eliminar')
                     <td>
                         <a wire:click="$dispatch('delete',{id: {{$proyecto->id}},
                         eventNombre: 'destroyProyecto'})" class="btn btn-danger btn-sm" title="Eliminar">
                             <i class="fas fa-trash-alt"></i>
                         </a>
                     </td>
+                    @endcan
                 </tr>
 
             @empty
