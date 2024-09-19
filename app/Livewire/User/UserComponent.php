@@ -78,6 +78,21 @@ class UserComponent extends Component
             'name.required' => 'El nombre es requerido',
             'name.min' => 'El nombre debe tener minimo 3 caracteres',
             'name.max' => 'El nombre solo puede tener 80 caracteres',
+            'email.required' => 'El correo electrónico es requerido',
+            'email.email' => 'El correo electrónico debe cumplir el formato requerido',
+            'email.max' => 'El correo electrónico solo puede tener 250 caracteres',
+            'email.unique' => 'El correo electrónico ya esta siendo usado',
+            'ci.required' => 'El CI es requerido',
+            'ci.min' => 'El CI debe tener minimo 7 caracteres',
+            'ci.max' => 'El CI solo puede tener 8 caracteres',
+            'ci.unique' => 'El CI ya esta siendo usado',
+            'password.required' => 'La contraseña es requerida',
+            'password.min' => 'La contraseña debe tener minimo 8 caracteres',
+            're_password.required' => 'La confirmación de contraseña es requerida',
+            're_password.same' => 'Las dos contraseñas deben ser iguales',
+            'image.image' => 'La imagen debe tener un formato valido',
+            'image.max' => 'La imagen debe pesar máximo 1MB',
+            'selectedRole.required' => 'El rol del usuario es requerido'
         ];
         $this->validate($rules, $messages);
         $user = new User();
@@ -117,7 +132,7 @@ class UserComponent extends Component
         $this->estado = $user->estado;
         $this->imageModel = $user->image ? $user->image->url : null;
 
-        $this->dispatch('open-modal', 'modalUser');
+        $this->dispatch('open-modal', 'modalUserEdit');
 
     }
     public function update(User $user)
@@ -131,7 +146,27 @@ class UserComponent extends Component
             're_password' => 'same:password',
             'image' => 'image|max:1024|nullable',
         ];
-        $this->validate($rules);
+        $messages = [
+            'name.required' => 'El nombre es requerido',
+            'name.min' => 'El nombre debe tener minimo 3 caracteres',
+            'name.max' => 'El nombre solo puede tener 80 caracteres',
+            'email.required' => 'El correo electrónico es requerido',
+            'email.email' => 'El correo electrónico debe cumplir el formato requerido',
+            'email.max' => 'El correo electrónico solo puede tener 250 caracteres',
+            'email.unique' => 'El correo electrónico ya esta siendo usado',
+            'ci.required' => 'El CI es requerido',
+            'ci.min' => 'El CI debe tener minimo 7 caracteres',
+            'ci.max' => 'El CI solo puede tener 8 caracteres',
+            'ci.unique' => 'El CI ya esta siendo usado',
+            'password.required' => 'La contraseña es requerida',
+            'password.min' => 'La contraseña debe tener minimo 8 caracteres',
+            're_password.required' => 'La confirmación de contraseña es requerida',
+            're_password.same' => 'Las dos contraseñas deben ser iguales',
+            'image.image' => 'La imagen debe tener un formato valido',
+            'image.max' => 'La imagen debe pesar máximo 1MB',
+        ];
+
+        $this->validate($rules, $messages);
 
         $user->name = $this->name;
         $user->id = $this->Id;
@@ -194,8 +229,14 @@ class UserComponent extends Component
     public function openRoleModal($userId)
     {
         $this->userId = $userId;
+
+        $user = User::find($userId);
+
+        $this->selectedRole = $user->roles->first() ? $user->roles->first()->name : null;
+
         $this->dispatch('open-modal', 'modalRoles');
     }
+
 
     public function assignRole()
     {

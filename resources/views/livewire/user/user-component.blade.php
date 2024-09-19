@@ -152,6 +152,7 @@
                         <div class="alert alert-danger w-100 mt-2">{{ $message }}</div>
                     @enderror
                 </div>
+                {{-- rol --}}
                 <div class="form-group col-4">
                     <label class="fas fa-file-signature" for="selectedRole"> Rol:</label>
                     <select wire:model='selectedRole' class="form-control" id="selectedRole">
@@ -184,18 +185,97 @@
         </form>
     </x-modal>
 
+    <x-modal modalId="modalUserEdit" modalTitle="Usuarios" modalSize="modal-lg">
+        <form wire:submit={{ $Id == 0 ? 'store' : "update($Id)" }}>
+            <div class="form-row">
+                {{-- nombre --}}
+                <div class="form-group col-md-4">
+                    <label class="fas fa-file-signature" for="name"> Nombree:</label>
+                    <input wire:model='name' type="text" class="form-control" placeholder="Nombre del usuario"
+                        id="name">
+                    @error('name')
+                        <div class="alert alert-danger w-100 mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
+                {{-- apellido paterno --}}
+                <div class="form-group col-md-4">
+                    <label class="fas fa-file-signature" for="apellido_paterno"> Apellido Paterno:</label>
+                    <input wire:model='apellido_paterno' type="text" class="form-control"
+                        placeholder="Apellido del usuario" id="apellido_paterno">
+                    @error('apellido_paterno')
+                        <div class="alert alert-danger w-100 mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
+                {{-- ci --}}
+                <div class="form-group col-md-4">
+                    <label class="fas fa-calendar-day" for="ci"> CI:</label>
+                    <input wire:model='ci' type="number" class="form-control" placeholder="ci" id="ci">
+                    @error('ci')
+                        <div class="alert alert-danger w-100 mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
+                {{-- email --}}
+                <div class="form-group col-4">
+                    <label class="fas fa-file-signature" for="email"> Correo Electronico:</label>
+                    <input wire:model='email' type="email" class="form-control"
+                        placeholder="Correo Electronico del usuario" id="email">
+                    @error('email')
+                        <div class="alert alert-danger w-100 mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
+                {{-- password --}}
+                <div class="form-group col-4">
+                    <label class="fas fa-file-signature" for="password"> Contraseña:</label>
+                    <input wire:model='password' type="password" class="form-control"
+                        placeholder="Contraseña del usuario" id="password">
+                    @error('password')
+                        <div class="alert alert-danger w-100 mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
+                {{-- repetir password --}}
+                <div class="form-group col-4">
+                    <label class="fas fa-file-signature" for="re_password"> Confirmar Contraseña:</label>
+                    <input wire:model='re_password' type="password" class="form-control"
+                        placeholder="Confirmar contraseña del usuario" id="re_password">
+                    @error('re_password')
+                        <div class="alert alert-danger w-100 mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
+                {{-- imagen --}}
+                <div class="form-group col-md-12">
+                    <label for="image"> Imagen:</label>
+                    <input wire:model='image' type="file" id="image" accept="image/*">
+                </div>
+                <div class="col-md-12">
+                    @if ($Id > 0)
+                        <x-image :item="$user = App\Models\User::find($Id)" size="200" float="float-right" />
+                    @endif
+                    @if ($this->image)
+                        <img src="{{ $image->temporaryUrl() }}" class="rounded float-left" width="200">
+                    @endif
+
+                </div>
+            </div>
+            <hr>
+            <button class="btn btn-primary float-right">{{ $Id == 0 ? 'Guardar' : 'Editar' }}</button>
+        </form>
+    </x-modal>
+
     {{-- Modal Roles --}}
     <x-modal modalId="modalRoles" modalTitle="Asignar Rol" modalSize="modal-md">
         <div class="form-group">
-            <label for="role">Selecciona un rol:</label>
-            <select wire:model="selectedRole" class="form-control">
+            <label for="role"> Rol:</label>
+            <select wire:model="selectedRole" class="form-control" id="selectedRole">
                 <option value="" disabled selected>Seleccione un rol</option>
                 @foreach ($roles as $role)
                     <option value="{{ $role->name }}">{{ $role->name }}</option>
                 @endforeach
             </select>
+            @error('selectedRole')
+                <div class="alert alert-danger w-100 mt-2">{{ $message }}</div>
+            @enderror
         </div>
-        <button wire:click="assignRole" class="btn btn-primary">Asignar Rol</button>
+        <button wire:click="assignRole" class="btn btn-primary float-right">Asignar Rol</button>
     </x-modal>
     
 
