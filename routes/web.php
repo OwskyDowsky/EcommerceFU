@@ -52,8 +52,8 @@ Route::get('/cupones',CuponComponent::class)->name('cupones')->middleware(['auth
 Route::get('/usuarios',UserComponent::class)->name('usuarios')->middleware(['auth']);
 Route::get('/usuarios/{user}',UserVer::class)->name('users.ver')->middleware(['auth']);
 /*roles*/
-Route::get('/roles',RolComponent::class)->name('roles');
+Route::get('/roles',RolComponent::class)->name('roles')->middleware(['auth']);
 /*permiso*/
-Route::get('/permisos',PermissionComponent::class)->name('permisos');
+Route::get('/permisos',PermissionComponent::class)->name('permisos')->middleware(['auth']);
 /*roles y permisos*/
-Route::get('/roles/{role}', RolPermisoComponent::class)->name('roles.permisos');
+Route::get('/roles/{role}', RolPermisoComponent::class)->name('roles.permisos')->middleware(['auth']);
