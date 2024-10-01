@@ -15,6 +15,8 @@ use App\Livewire\Rol\RolPermisoComponent;
 use App\Livewire\Sede\SedeComponent;
 use App\Livewire\User\UserComponent;
 use App\Livewire\User\UserVer;
+use App\Livewire\Ecommerce\EcommerceComponent;
+use App\Http\Controllers\EcommerceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,3 +59,6 @@ Route::get('/roles',RolComponent::class)->name('roles')->middleware(['auth']);
 Route::get('/permisos',PermissionComponent::class)->name('permisos')->middleware(['auth']);
 /*roles y permisos*/
 Route::get('/roles/{role}', RolPermisoComponent::class)->name('roles.permisos')->middleware(['auth']);
+
+//Route::get('/ecommerce', EcommerceComponent::class)->name('ecommerce');
+Route::get('/ecommerce', [EcommerceController::class, 'index']);
