@@ -7,6 +7,7 @@ use App\Livewire\Categoria\CategoriaVer;
 use App\Livewire\Producto\ProductoComponent;
 use App\Livewire\Proyecto\ProyectoComponent;
 use App\Livewire\Categoria\CategoriaComponent;
+use App\Livewire\Cliente\ClienteComponent;
 use App\Livewire\Cupon\CuponComponent;
 use App\Livewire\Permission\PermissionComponent;
 use App\Livewire\Producto\ProductoVer;
@@ -15,6 +16,8 @@ use App\Livewire\Rol\RolPermisoComponent;
 use App\Livewire\Sede\SedeComponent;
 use App\Livewire\User\UserComponent;
 use App\Livewire\User\UserVer;
+use App\Livewire\Venta\VentaComponent;
+use App\Livewire\Venta\VentaCreate;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +39,7 @@ Auth::routes(['register'=>false]);
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/',Inicio::class)->name('home')->middleware(['auth']);
+/*categorias*/
 Route::get('/categorias',CategoriaComponent::class)->name('categorias')->middleware(['auth']);
 Route::get('/categorias/{categoria}', CategoriaVer::class)->name('categorias.ver')->middleware(['auth']);
 /* nuestros proyectos*/
@@ -52,8 +56,13 @@ Route::get('/cupones',CuponComponent::class)->name('cupones')->middleware(['auth
 Route::get('/usuarios',UserComponent::class)->name('usuarios')->middleware(['auth']);
 Route::get('/usuarios/{user}',UserVer::class)->name('users.ver')->middleware(['auth']);
 /*roles*/
-Route::get('/roles',RolComponent::class)->name('roles');
+Route::get('/roles',RolComponent::class)->name('roles')->middleware(['auth']);
 /*permiso*/
-Route::get('/permisos',PermissionComponent::class)->name('permisos');
+Route::get('/permisos',PermissionComponent::class)->name('permisos')->middleware(['auth']);
 /*roles y permisos*/
-Route::get('/roles/{role}', RolPermisoComponent::class)->name('roles.permisos');
+Route::get('/roles/{role}', RolPermisoComponent::class)->name('roles.permisos')->middleware(['auth']);
+/*clientes usuarios estudiantes*/
+Route::get('/clientes',ClienteComponent::class)->name('clientes')->middleware(['auth']);
+/*ventas*/
+Route::get('/ventas/crear',VentaCreate::class)->name('ventas.create')->middleware(['auth']);
+
