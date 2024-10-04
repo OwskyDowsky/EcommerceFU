@@ -87,8 +87,6 @@ class SedeComponent extends Component
         $rules = [
             'nombre' => 'required|min:3|max:80|unique:sedes,id,' . $this->Id,
             'ubicacion' => 'max:250',
-            'tipo' => 'required',
-            'image' => 'image|max:3024|nullable',
         ];
         $messages = [
             'nombre.required' => 'El nombre es requerido',
@@ -96,9 +94,6 @@ class SedeComponent extends Component
             'nombre.max' => 'El nombre solo puede tener 80 caracteres',
             'nombre.unique' => 'El nombre de la categoria ya existe',
             'ubicacion.max' => 'La ubicacion solo puede tener 250 caracteres',
-            'tipo.required' => 'El tipo es requerido',
-            'image.image' => 'Debe ser un formato de imagen valido',
-            'image.max' => 'El tamaño de la imagen debe ser de 3 MB como máximo'
         ];
         $this->validate($rules);
 
