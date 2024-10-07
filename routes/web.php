@@ -8,6 +8,8 @@ use App\Livewire\Producto\ProductoComponent;
 use App\Livewire\Proyecto\ProyectoComponent;
 use App\Livewire\Categoria\CategoriaComponent;
 use App\Livewire\Cupon\CuponComponent;
+use App\Livewire\Cupon\CuponCategoriaComponent;
+use App\Livewire\Cupon\CuponProductoComponent;
 use App\Livewire\Permission\PermissionComponent;
 use App\Livewire\Producto\ProductoVer;
 use App\Livewire\Rol\RolComponent;
@@ -53,6 +55,8 @@ Route::get('/productos/{producto}',ProductoVer::class)->name('productos.ver')->m
 Route::get('/sedes',SedeComponent::class)->name('sedes')->middleware(['auth']);
 /*cupones*/
 Route::get('/cupones',CuponComponent::class)->name('cupones')->middleware(['auth']);
+Route::get('/cupones-categoria',CuponCategoriaComponent::class)->name('cupones.categoria')->middleware(['auth']);
+Route::get('/cupones-producto',CuponProductoComponent::class)->name('cupones.producto')->middleware(['auth']);
 /*usuarios*/
 Route::get('/usuarios',UserComponent::class)->name('usuarios')->middleware(['auth']);
 Route::get('/usuarios/{user}',UserVer::class)->name('users.ver')->middleware(['auth']);
