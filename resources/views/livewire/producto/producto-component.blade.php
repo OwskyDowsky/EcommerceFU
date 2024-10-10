@@ -1,9 +1,11 @@
 <div>
     <x-card cardTitle="Lista de productos ({{ $this->totalRegistros }})" cardTools="card tools">
         <x-slot:cardTools>
+            @can('Producto crear')
             <a href="#" class="btn btn-primary" wire:click='create'>
                 <i
                     class="fas fa-plus-circle"></i> Agregar Producto</a>
+            @endcan            
         </x-slot:cardTools>
 
         <x-table>
@@ -14,10 +16,16 @@
                 <th>SEDE</th>
                 <th>PRECIO</th>
                 <th>STOCK</th>
+                @can('Producto baja')
                 <th>ESTADO</th>
+                @endcan
                 <th width="6%">VER</th>
+                @can('Producto editar')
                 <th width="6%">EDITAR</th>
+                @endcan
+                @can('Producto eliminar')
                 <th width="6%">BORRAR</th>
+                @endcan
 
             </x-slot>
 
@@ -31,28 +39,34 @@
                     <td>{{ $producto->sede->nombre }}</td>
                     <td>{{ $producto->precio }}</td>
                     <td>{{ $producto->stock }}</td>
+                    @can('Producto baja')
                     <td>
                         <div class="custom-control custom-switch">
                             <input type="checkbox" class="custom-control-input" id="customSwitch{{ $producto->id }}" wire:click="toggleEstado({{ $producto->id }})" {{ $producto->estado === 'activo' ? 'checked' : '' }}>
                             <label class="custom-control-label" for="customSwitch{{ $producto->id }}">{{ $producto->estado }}</label>
                         </div>
                     </td>
+                    @endcan
                     <td>
                         <a href="{{route('productos.ver', $producto)}}" class="btn btn-success btn-sm" title="Ver">
                             <i class="far fa-eye"></i>
                         </a>
                     </td>
+                    @can('Producto editar')
                     <td>
                         <a href="#" wire:click='edit({{$producto->id}})' class="btn btn-warning btn-sm" title="Editar">
                             <i class="far fa-edit"></i>
                         </a>
                     </td>
+                    @endcan
+                    @can('Producto eliminar')
                     <td>
                         <a wire:click="$dispatch('delete',{id: {{$producto->id}},
                         eventNombre: 'destroyProducto'})" class="btn btn-danger btn-sm" title="Eliminar">
                             <i class="fas fa-trash-alt"></i>
                         </a>
                     </td>
+                    @endcan
                 </tr>
 
             @empty

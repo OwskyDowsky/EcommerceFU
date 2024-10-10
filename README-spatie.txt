@@ -26,3 +26,18 @@ Route::get('/roles',RolComponent::class)->name('roles');
 Route::get('/permisos',PermissionComponent::class)->name('permisos');
 /*roles y permisos*/
 Route::get('/roles/{role}', RolPermisoComponent::class)->name('roles.permisos');
+
+
+
+-------------------------------------------------------------------------------------------------------------
+
+Agregar lo siguiente:
+php artisan make:seeder PermissionSeeder
+
+Ejecutar lo siguiente:
+php artisan db:seed --class=PermissionSeeder
+
+
+Fijarse los seeders
+
+Migrar los seeders 

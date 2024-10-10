@@ -1,18 +1,24 @@
 <div>
     <x-card cardTitle="Lista Roles ({{ $this->totalRegistros }})" cardTools="card tools">
         <x-slot:cardTools>
+            @can('Rol crear')
             <a href="#" class="btn btn-primary" wire:click='create'>
                 <i
                     class="fas fa-plus-circle"></i> Crear roles</a>
+            @endcan
         </x-slot:cardTools>
 
         <x-table>
             <x-slot:thead>
                 <th>ID</th>
                 <th>NOMBRE</th>
+                @can('Rol editar')
                 <th width="6%">PERMISOS</th>
                 <th width="6%">EDITAR</th>
+                @endcan
+                @can('Rol eliminar')
                 <th width="6%">BORRAR</th>
+                @endcan
 
             </x-slot>
 
@@ -20,22 +26,26 @@
                 <tr>
                     <td>{{ $role->id }}</td>
                     <td>{{ $role->name }}</td>
-                        <td>
-                            <a href="{{ route('roles.permisos', $role->id) }}" class="btn btn-success btn-sm" title="Permisos">
-                                <i class="far fa-eye"></i>
-                            </a>
-                        </td>
+                    @can('Rol editar')
+                    <td>
+                        <a href="{{ route('roles.permisos', $role->id) }}" class="btn btn-success btn-sm" title="Permisos">
+                            <i class="far fa-eye"></i>
+                        </a>
+                    </td>
                     <td>
                         <a href="#" wire:click='edit({{$role->id}})' class="btn btn-warning btn-sm" title="Editar">
                             <i class="far fa-edit"></i>
                         </a>
                     </td>
+                    @endcan
+                    @can('Rol eliminar')
                     <td>
                         <a wire:click="$dispatch('delete',{id: {{$role->id}},
                         eventNombre: 'destroyRole'})" class="btn btn-danger btn-sm" title="Eliminar">
                             <i class="fas fa-trash-alt"></i>
                         </a>
                     </td>
+                    @endcan
                 </tr>
 
             @empty
