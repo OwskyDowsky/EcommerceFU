@@ -1,9 +1,11 @@
 <div>
     <x-card cardTitle="Lista de clientes ({{ $this->totalRegistros }})">
         <x-slot:cardTools>
+            @can('Cliente crear')
             <a href="#" class="btn btn-primary" wire:click='create'>
                 <i class="fas fa-plus-circle"></i> Agregar cliente
             </a>
+            @endcan
         </x-slot>
 
         <x-table>
@@ -13,10 +15,15 @@
                 <th>CI</th>
                 <th>NOMBRE</th>
                 <th>APELLIDO</th>
+                @can('Cliente baja')
                 <th>ESTADO</th>
+                @endcan
+                @can('Cliente editar')
                 <th width="6%">EDITAR</th>
+                @endcan
+                @can('Cliente eliminar')
                 <th width="6%">BORRAR</th>
-
+                @endcan
             </x-slot>
 
             @forelse ($clientes as $cliente)
@@ -26,6 +33,7 @@
                     <td>{{ $cliente->ci }}</td>
                     <td>{{ $cliente->nombre }}</td>
                     <td>{{ $cliente->apellido }}</td>
+                    @can('Cliente baja')
                     <td>
                         <div class="custom-control custom-switch">
                             <input type="checkbox" class="custom-control-input" id="customSwitch{{ $cliente->id }}"
@@ -35,12 +43,16 @@
                                 for="customSwitch{{ $cliente->id }}">{{ $cliente->estado }}</label>
                         </div>
                     </td>
+                    @endcan
+                    @can('Cliente editar')
                     <td>
                         <a href="#" wire:click='edit({{ $cliente->id }})' class="btn btn-warning btn-sm"
                             title="Editar">
                             <i class="far fa-edit"></i>
                         </a>
                     </td>
+                    @endcan
+                    @can('Cliente eliminar')
                     <td>
                         <a wire:click="$dispatch('delete',{id: {{ $cliente->id }},
                         eventNombre: 'destroyCliente'})"
@@ -48,6 +60,7 @@
                             <i class="fas fa-trash-alt"></i>
                         </a>
                     </td>
+                    @endcan
                 </tr>
 
             @empty
