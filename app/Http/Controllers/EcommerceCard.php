@@ -2,30 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CartCliente;
 use Illuminate\Http\Request;
 use App\Models\Productos;
-use Livewire\Attributes\Title;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class EcommerceCard extends Controller
 {
-    //
     use WithPagination;
-    //propiedades
-    public $search='';
-    public $cant=5;
-    public $totalRegistro=0;
+
+    public $search = '';
+    public $cant = 5;
 
     public function carrito()
     {
-        $productos = Productos::all();
-        if($this->search!=''){
-            $this->resetPage();
-        }
-        $this->totalRegistro = Productos::count();
-
-        return view('components.ecommerce.ecommerce-card', compact('productos')); // Asegúrate de que la ruta sea correcta
-        
+        return view('components.ecommerce.ecommerce-card', [
+            'productos' => $this->productos(),
+        ]);
+    }
+    #[Computed()]
+    public function productos()
+    {
+        return Productos::where('nombre', 'like', '%' . $this->search . '%')
+            ->orderBy('id', 'desc')
+            ->paginate($this->cant);
     }
 }

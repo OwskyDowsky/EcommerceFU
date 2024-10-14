@@ -1,68 +1,62 @@
-<div>
-    <h1>carrito de compra</h1>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card card-info">
-                <div class="card-header">
-                    <h3 class="card-title"><i class="fas fa-tshirt"></i> Productos</h3>
-                </div>
-            
-                <div class="card-body">
-            
-                    <x-table>
-            
-                        <x-slot:thead>
+<div class="container">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap@5.3.2.min.css') }}">
+    <h1>Carrito de Compra</h1>
+    <div class="card card-info">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fas fa-cart-plus"></i> Detalles Venta</h3>
+            <div class="card-tools">
+                <i class="fas fa-tshirt" title="Número de productos"></i>
+                <span class="badge badge-pill bg-purple">cuenta los productos</span>
+                <i class="fas fa-shopping-basket ml-2" title="Número de items"></i>
+                <span class="badge badge-pill bg-purple">cuenta cantidad de cada uno</span>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover table-sm table-striped text-center">
+                    <thead>
+                        <tr>
                             <th scope="col">#</th>
-                            <td scope="col">Img</td>
                             <th scope="col">Nombre</th>
-                            <th scope="col">Precio.vt</th>
-                            <th scope="col">Stock</th>
-                            <th scope="col">Agregar</th>
-            
-                        </x-slot>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Sub Total</th>
+                            <th scope="col">Quitar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         
-                        @forelse ($productos as $producto)
-                            
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <button wire:click="decrementProductoCliente()" class="btn btn-danger btn-xs" title="Eliminar">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        
+                            <tr>
+                                <td colspan="6">Sin Registros</td>
+                            </tr>
+                        
                         <tr>
-                            <td>{{$producto->id}}</td>
+                            <td colspan="4"></td>
                             <td>
-                                <x-image :item="$producto" size="35" />
-            
+                                <h5>Total:</h5>
                             </td>
-                            <td>{{$producto->nombre}}</td>
-                            <td>{{$producto->precio}}</td>
-                            <td>{{$producto->stock}}</td>
                             <td>
-            
-                            <button
-                                wire:click="addProducto({{$producto->id}})"
-                                class="btn btn-primary btn-sm"
-                                title="Agregar">
-                                <i class="fas fa-plus-circle"></i>
-                            </button>
-                        </td>
-            
-                    </tr>
-                    @empty
-                        <tr>
-                            <td colspan="10">Sin Registros</td>
-                        </tr>  
-                    @endforelse
-               
-                </x-table>
-            
+                                <h5>
+                                    <span class="badge badge-pill badge-secondary">total pagar</span>
+                                </h5>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="card-footer">
-                
-            </div>
-            
-            </div>
-            
-
         </div>
-        <div class="col-md-6">
-                
-        </div>
-
     </div>
 </div>

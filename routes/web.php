@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EcommerceCard;
 use App\Livewire\Home\Inicio;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Proyecto\ProyectoVer;

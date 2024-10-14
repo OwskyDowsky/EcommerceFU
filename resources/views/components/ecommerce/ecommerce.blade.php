@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Navbar con Carrito</title>
     <!-- Bootstrap CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    {{--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">--}}
+    <link rel="stylesheet" href="{{asset('css/bootstrap@5.3.2.min.css')}}">
 </head>
 <body>
     <!-- Navbar -->
@@ -38,8 +39,15 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ $producto->nombre }}</h5>
                             <p class="card-text">{{ $producto->descripcion }}</p>
+                            <p>{{$producto->id}}</p>
                             <div class="text-end"> 
-                                <a href="#" class="btn btn-primary">Añadir al carrito</a>
+                                <button
+                                wire:click="addProductoCliente({{$producto->id}})"
+                                class="btn btn-primary btn-sm"
+                                title="Agregar">
+                                <i class="fas fa-plus-circle"></i>
+                                agregar al carrito
+                            </button>
                             </div>
                         </div>
                     </div>
