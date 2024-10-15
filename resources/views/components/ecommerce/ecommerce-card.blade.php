@@ -1,5 +1,6 @@
 <div class="container">
     <link rel="stylesheet" href="{{ asset('css/bootstrap@5.3.2.min.css') }}">
+    @include('components.layouts.partials.styles')
     <h1>Carrito de Compra</h1>
     <div class="card card-info">
         <div class="card-header">

@@ -39,7 +39,7 @@ class ClienteComponent extends Component
         $this->Id = 0;
 
         $this->clean();
-        $this->dispatch('open-modal', 'modalCliente');
+        $this->dispatch('open-modal', 'modalClientes');
     }
 
     public function store()
@@ -64,7 +64,7 @@ class ClienteComponent extends Component
         $cliente->estado = $this->estado;
         $cliente->save();
 
-        $this->dispatch('close-modal', 'modalCliente');
+        $this->dispatch('close-modal', 'modalClientes');
         $this->dispatch('msg', 'Clientes creado con exito');
         $this->clean();
     }
@@ -78,7 +78,7 @@ class ClienteComponent extends Component
         $this->cod_estudiante = $cliente->cod_estudiante;
         $this->estado = $cliente->estado;
 
-        $this->dispatch('open-modal', 'modalCliente');
+        $this->dispatch('open-modal', 'modalClientes');
     }
     public function update(Clientes $cliente)
     {
@@ -96,7 +96,7 @@ class ClienteComponent extends Component
         $cliente->cod_estudiante = $this->cod_estudiante;
         $cliente->estado = $this->estado;
 
-        $this->dispatch('close-modal', 'modalCliente');
+        $this->dispatch('close-modal', 'modalClientes');
         $this->dispatch('msg', 'Cliente editado correctamente');
 
         $this->clean();

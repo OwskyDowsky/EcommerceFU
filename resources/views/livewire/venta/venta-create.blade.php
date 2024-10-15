@@ -14,6 +14,8 @@
          {{--columna detalles venta--}}
          <div class="col-md-6">
                @include('ventas.card-details')
+               {{--cliente--}}
+               @livewire('venta.client')
          </div>
        </div>
  

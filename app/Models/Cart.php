@@ -42,5 +42,9 @@ class Cart
             ]);
         }
     }
+    //conteo articulos
+    public static function totalArticulos(){
+        return \Cart::session(userId())->getTotalQuantity();
+    }
     
 }

@@ -45,8 +45,11 @@ use App\Livewire\Cliente\ClienteComponent;
 Auth::routes(['register'=>false]);
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Route::get('/',Inicio::class)->name('home')->middleware(['auth']);
+Route::get('/sanasana', [EcommerceController::class, 'index']);
+Route::get('/', [EcommerceController::class, 'index']);
+Route::get('/ecommerce/card', [EcommerceCard::class, 'carrito'])->name('carrito');
+/*con auth*/
+Route::get('/home',Inicio::class)->name('home')->middleware(['auth']);
 Route::get('/categorias',CategoriaComponent::class)->name('categorias')->middleware(['auth']);
 Route::get('/categorias/{categoria}', CategoriaVer::class)->name('categorias.ver')->middleware(['auth']);
 /* nuestros proyectos*/
@@ -83,5 +86,3 @@ Route::get('/clientes',ClienteComponent::class)->name('clientes')->middleware(['
 Route::get('/ventas/crear',VentaCreate::class)->name('ventas.create')->middleware(['auth']);
 
 //Route::get('/ecommerce', EcommerceComponent::class)->name('ecommerce');
-Route::get('/ecommerce', [EcommerceController::class, 'index']);
-Route::get('/ecommerce/card', [EcommerceCard::class, 'carrito'])->name('carrito');

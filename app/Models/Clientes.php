@@ -11,6 +11,9 @@ use Spatie\Activitylog\Models\Activity;
 class Clientes extends Model
 {
     use HasFactory, LogsActivity;
+    public function ventas(){
+        return $this->hasMany(Ventas::class);
+    }
 
     protected static $logAttributes = ['nombre', 'apellido', 'cod_estudiante', 'ci', 'estado'];
     protected static $logName = 'clientes';

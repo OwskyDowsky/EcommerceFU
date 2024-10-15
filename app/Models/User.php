@@ -15,6 +15,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Models\Activity;
+use Spatie\Permission\Models\Role;
 
 class User extends Authenticatable
 {
@@ -73,6 +74,10 @@ class User extends Authenticatable
             ->logOnly(['name', 'email', 'password', 'apellido_paterno', 'estado', 'ci'])
             ->useLogName('usuarios')
             ->logOnlyDirty();
+    }
+    public function role()
+    {
+        return $this->belongsTo(Role::class); 
     }
 
     // Método para personalizar los nombres de eventos

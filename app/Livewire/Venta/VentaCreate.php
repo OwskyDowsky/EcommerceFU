@@ -3,11 +3,12 @@
 namespace App\Livewire\Venta;
 
 use App\Models\Cart;
-use App\Models\Productos;
-use Livewire\Attributes\Computed;
-use Livewire\Attributes\Title;
 use Livewire\Component;
+use App\Models\Productos;
+use Livewire\Attributes\On;
 use Livewire\WithPagination;
+use Livewire\Attributes\Title;
+use Livewire\Attributes\Computed;
 
 #[Title('Crear ventas')]
 class VentaCreate extends Component
@@ -17,6 +18,11 @@ class VentaCreate extends Component
     public $search='';
     public $cant=5;
     public $totalRegistro=0;
+    //
+    public $client = 1;
+    public $pago;
+    public $fecha;
+
 
     public function render()
     {
@@ -28,7 +34,8 @@ class VentaCreate extends Component
         return view('livewire.venta.venta-create',[
             'productos' => $this->productos,
             'cart' => Cart::getCart(),
-            'total' => Cart::getTotal()
+            'total' => Cart::getTotal(),
+            'totalArticulos' => Cart::totalArticulos(),
         ]);
     }
     public function addProducto(Productos $producto){
@@ -45,6 +52,11 @@ class VentaCreate extends Component
         return Productos::where('nombre','like','%'.$this->search.'%')
             ->orderBy('id','desc')
             ->paginate($this->cant);
+    }
+    #[On('clientes_id')]
+    public function client_id($id = 1)
+    {
+        $this->client = $id;
     }
 
 

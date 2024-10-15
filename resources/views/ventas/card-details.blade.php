@@ -8,6 +8,11 @@
             <!-- Conteo de articulos -->
             <i class="fas fa-shopping-basket ml-2" title="Numero items"></i>
             <span class="badge badge-pill bg-purple">0 </span>
+
+            <button wire:click="{{ isset($venta) ? 'editVenta' : 'createVenta' }}" class="btn bg-green ml-4 btn-sm rounded-btn">
+                <i class="fas fa-cart-plus"></i>
+                {{ isset($venta) ? 'Editar Venta' : 'Crear Venta' }}
+            </button>
         </div>
     </div>
 <!-- card-body -->

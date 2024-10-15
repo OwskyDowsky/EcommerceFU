@@ -2,9 +2,9 @@
     <x-card cardTitle="Lista Usuarios ({{ $this->totalRegistros }})">
         <x-slot:cardTools>
             @can('Usuario crear')
-            <a href="#" class="btn btn-primary" wire:click='create'>
-                <i class="fas fa-plus-circle"></i> Agregar Usuario
-            </a>
+                <a href="#" class="btn btn-primary" wire:click='create'>
+                    <i class="fas fa-plus-circle"></i> Agregar Usuario
+                </a>
             @endcan
         </x-slot>
 
@@ -17,15 +17,16 @@
                 <th>APELLIDO</th>
                 <th>EMAIL</th>
                 @can('Usuario baja')
-                <th>ESTADO</th>
+                    <th>ESTADO</th>
+                    <th width="6%">ROL</th>
                 @endcan
                 <th width="6%">VER</th>
                 @can('Usuario editar')
-                <th width="6%">ROLES</th>
-                <th width="6%">EDITAR</th>
+                    <th width="6%">ROLES</th>
+                    <th width="6%">EDITAR</th>
                 @endcan
                 @can('Usuario eliminar')
-                <th width="6%">BORRAR</th>
+                    <th width="6%">BORRAR</th>
                 @endcan
 
             </x-slot>
@@ -41,42 +42,52 @@
                     <td>{{ $user->apellido_paterno }}</td>
                     <td>{{ $user->email }}</td>
                     @can('Usuario baja')
+                        <td>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="customSwitch{{ $user->id }}"
+                                    wire:click="toggleEstado({{ $user->id }})"
+                                    {{ $user->estado === 'activo' ? 'checked' : '' }}>
+                                <label class="custom-control-label"
+                                    for="customSwitch{{ $user->id }}">{{ $user->estado }}</label>
+                            </div>
+                        </td>
+                    @endcan
                     <td>
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="customSwitch{{ $user->id }}"
-                                wire:click="toggleEstado({{ $user->id }})"
-                                {{ $user->estado === 'activo' ? 'checked' : '' }}>
-                            <label class="custom-control-label"
-                                for="customSwitch{{ $user->id }}">{{ $user->estado }}</label>
-                        </div>
+                        @if (!empty($user->assignedRoles))
+                            @foreach ($user->assignedRoles as $role)
+                                <span class="badge bg-info">{{ $role }}</span>
+                            @endforeach
+                        @else
+                            <span class="badge bg-secondary">Sin rol asignado</span>
+                        @endif
                     </td>
-                    @endcan                 
                     <td>
                         <a href="{{ route('users.ver', $user) }}" class="btn btn-success btn-sm" title="Ver">
                             <i class="far fa-eye"></i>
                         </a>
                     </td>
                     @can('Usuario editar')
-                    <td>
-                        <a href="#" class="btn btn-info btn-sm" title="Roles" wire:click='openRoleModal({{ $user->id }})'>
-                            <i class="fas fa-user-tag"></i>
-                        </a>
-                    </td>   
-                    <td>
-                        <a href="#" wire:click='edit({{ $user->id }})' class="btn btn-warning btn-sm"
-                            title="Editar">
-                            <i class="far fa-edit"></i>
-                        </a>
-                    </td>
+                        <td>
+                            <a href="#" class="btn btn-info btn-sm" title="Roles"
+                                wire:click='openRoleModal({{ $user->id }})'>
+                                <i class="fas fa-user-tag"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" wire:click='edit({{ $user->id }})' class="btn btn-warning btn-sm"
+                                title="Editar">
+                                <i class="far fa-edit"></i>
+                            </a>
+                        </td>
                     @endcan
                     @can('Usuario eliminar')
-                    <td>
-                        <a wire:click="$dispatch('delete',{id: {{ $user->id }},
+                        <td>
+                            <a wire:click="$dispatch('delete',{id: {{ $user->id }},
                         eventNombre: 'destroyUser'})"
-                            class="btn btn-danger btn-sm" title="Eliminar">
-                            <i class="fas fa-trash-alt"></i>
-                        </a>
-                    </td>
+                                class="btn btn-danger btn-sm" title="Eliminar">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
                     @endcan
                 </tr>
 
@@ -156,8 +167,8 @@
                 <div class="form-group col-4">
                     <label class="fas fa-file-signature" for="selectedRole"> Rol:</label>
                     <select wire:model='selectedRole' class="form-control" id="selectedRole">
-                    <option value="" disabled selected>Selecciona un rol</option>
-                        @foreach($roles as $role)
+                        <option value="" disabled selected>Selecciona un rol</option>
+                        @foreach ($roles as $role)
                             <option value="{{ $role->name }}">{{ $role->name }}</option>
                         @endforeach
                     </select>
@@ -277,6 +288,6 @@
         </div>
         <button wire:click="assignRole" class="btn btn-primary float-right">Asignar Rol</button>
     </x-modal>
-    
+
 
 </div>
