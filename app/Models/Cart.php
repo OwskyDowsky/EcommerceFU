@@ -46,5 +46,10 @@ class Cart
     public static function totalArticulos(){
         return \Cart::session(userId())->getTotalQuantity();
     }
+
+    //cancelar venta
+    public static function clear(){
+        \Cart::session(userID())->clear();
+    }
     
 }

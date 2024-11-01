@@ -40,7 +40,7 @@ class Client extends Component
         } else {
             $this->nameClient = 'Cliente no seleccionado'; // o cualquier valor por defecto
         }
-    }   
+    } 
 
     public function nameClient($id=1){
         $findClient = Clientes::find($id);
