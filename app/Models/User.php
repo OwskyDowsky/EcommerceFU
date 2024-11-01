@@ -75,10 +75,6 @@ class User extends Authenticatable
             ->useLogName('usuarios')
             ->logOnlyDirty();
     }
-    public function role()
-    {
-        return $this->belongsTo(Role::class); 
-    }
 
     // Método para personalizar los nombres de eventos
     public function tapActivity(Activity $activity, string $eventName)

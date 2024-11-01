@@ -37,14 +37,15 @@ class UserComponent extends Component
     public $userId; // Para almacenar el usuario al que se le asignará el rol
 
     public function render()
-
     {
-        $users = User::where('name', 'like', '%' . $this->search . '%')
-            ->orderBy('id', 'desc')
-            ->paginate($this->cant);
-        $this->totalRegistros = User::count();
+        // Cargar los usuarios con sus roles
+        $users = User::with('roles')->paginate(10);
+
+        $roles = Role::all();
+
         return view('livewire.user.user-component', [
-            'users' => $users
+            'users' => $users,
+            'roles' => $roles,
         ]);
     }
 

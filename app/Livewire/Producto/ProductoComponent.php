@@ -104,6 +104,7 @@ class ProductoComponent extends Component
         $producto->proyecto_id = $this->proyecto_id;
         $producto->sede_id = $this->sede_id;
         $producto->estado = $this->estado;
+        $producto->slug = strtolower(str_replace(' ', '-', $this->nombre));
         $producto->save();
 
         if ($this->image) {
@@ -161,6 +162,7 @@ class ProductoComponent extends Component
         $producto->categoria_id = $this->categoria_id;
         $producto->proyecto_id = $this->proyecto_id;
         $producto->sede_id = $this->sede_id;
+        $producto->slug = strtolower(str_replace(' ', '-', $this->nombre));
         //$producto->imageModel = $this->imagen;
 
         $producto->update();

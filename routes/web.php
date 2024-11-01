@@ -48,31 +48,33 @@ Auth::routes(['register'=>false]);
 Route::get('/sanasana', [EcommerceController::class, 'index']);
 Route::get('/', [EcommerceController::class, 'index']);
 Route::get('/ecommerce/card', [EcommerceCard::class, 'carrito'])->name('carrito');
+Route::get('/ecommerce/wishlist', [EcommerceController::class, 'wishlist'])->name('wishlist');
+Route::get('/detalle-producto/{slug}', [EcommerceController::class, 'ProductoInfo'])->name('producto.info');
 /*con auth*/
 Route::get('/home',Inicio::class)->name('home')->middleware(['auth']);
-Route::get('/categorias',CategoriaComponent::class)->name('categorias')->middleware(['auth']);
-Route::get('/categorias/{categoria}', CategoriaVer::class)->name('categorias.ver')->middleware(['auth']);
+Route::get('/categorias',CategoriaComponent::class)->name('categorias')->middleware(['auth', 'can:Categoria ver']);
+Route::get('/categorias/{categoria}', CategoriaVer::class)->name('categorias.ver')->middleware(['auth', 'can:Categoria ver']);
 /* nuestros proyectos*/
-Route::get('/proyectos',ProyectoComponent::class)->name('proyectos')->middleware(['auth']);
-Route::get('/proyectos/{proyecto}',ProyectoVer::class)->name('proyectos.ver')->middleware(['auth']);
+Route::get('/proyectos',ProyectoComponent::class)->name('proyectos')->middleware(['auth', 'can:Proyecto ver']);
+Route::get('/proyectos/{proyecto}',ProyectoVer::class)->name('proyectos.ver')->middleware(['auth', 'can:Proyecto ver']);
 /*productos*/
-Route::get('/productos',ProductoComponent::class)->name('productos')->middleware(['auth']);
-Route::get('/productos/{producto}',ProductoVer::class)->name('productos.ver')->middleware(['auth']);
+Route::get('/productos',ProductoComponent::class)->name('productos')->middleware(['auth', 'can:Producto ver']);
+Route::get('/productos/{producto}',ProductoVer::class)->name('productos.ver')->middleware(['auth', 'can:Producto ver']);
 /*sedes*/
-Route::get('/sedes',SedeComponent::class)->name('sedes')->middleware(['auth']);
+Route::get('/sedes',SedeComponent::class)->name('sedes')->middleware(['auth', 'can:Sede ver']);
 /*cupones*/
-Route::get('/cupones',CuponComponent::class)->name('cupones')->middleware(['auth']);
-Route::get('/cupones-categoria',CuponCategoriaComponent::class)->name('cupones.categoria')->middleware(['auth']);
-Route::get('/cupones-producto',CuponProductoComponent::class)->name('cupones.producto')->middleware(['auth']);
+Route::get('/cupones',CuponComponent::class)->name('cupones')->middleware(['auth', 'can:Cupon ver']);
+Route::get('/cupones-categoria',CuponCategoriaComponent::class)->name('cupones.categoria')->middleware(['auth', 'can:Cupon ver']);
+Route::get('/cupones-producto',CuponProductoComponent::class)->name('cupones.producto')->middleware(['auth', 'can:Cupon ver']);
 /*usuarios*/
-Route::get('/usuarios',UserComponent::class)->name('usuarios')->middleware(['auth']);
-Route::get('/usuarios/{user}',UserVer::class)->name('users.ver')->middleware(['auth']);
+Route::get('/usuarios',UserComponent::class)->name('usuarios')->middleware(['auth', 'can:Usuario ver']);
+Route::get('/usuarios/{user}',UserVer::class)->name('users.ver')->middleware(['auth', 'can:Usuario ver']);
 /*roles*/
-Route::get('/roles',RolComponent::class)->name('roles')->middleware(['auth']);
+Route::get('/roles',RolComponent::class)->name('roles')->middleware(['auth', 'can:Rol ver']);
 /*permiso*/
-Route::get('/permisos',PermissionComponent::class)->name('permisos')->middleware(['auth']);
+Route::get('/permisos',PermissionComponent::class)->name('permisos')->middleware(['auth', 'can:Permiso ver']);
 /*roles y permisos*/
-Route::get('/roles/{role}', RolPermisoComponent::class)->name('roles.permisos')->middleware(['auth']);
+Route::get('/roles/{role}', RolPermisoComponent::class)->name('roles.permisos')->middleware(['auth', 'can:Rol editar']);
 /*activity logs*/
 Route::get('/logs', LogsComponent::class)->name('logs')->middleware(['auth']);
 Route::get('/logs/{log}', LogsVer::class)->name('logs.ver')->middleware(['auth']);
@@ -81,7 +83,7 @@ Route::get('/logs/{log}', LogsVer::class)->name('logs.ver')->middleware(['auth']
 //Route::get('/ecommerce', [EcommerceController::class, 'index']);
 
 /*clientes usuarios estudiantes*/
-Route::get('/clientes',ClienteComponent::class)->name('clientes')->middleware(['auth']);
+Route::get('/clientes',ClienteComponent::class)->name('clientes')->middleware(['auth', 'can:Cliente ver']);
 /*ventas*/
 Route::get('/ventas/crear',VentaCreate::class)->name('ventas.create')->middleware(['auth']);
 

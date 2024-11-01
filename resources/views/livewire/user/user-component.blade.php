@@ -18,8 +18,8 @@
                 <th>EMAIL</th>
                 @can('Usuario baja')
                     <th>ESTADO</th>
-                    <th width="6%">ROL</th>
                 @endcan
+                    <th width="6%">ROL</th>
                 <th width="6%">VER</th>
                 @can('Usuario editar')
                     <th width="6%">ROLES</th>
@@ -53,13 +53,19 @@
                         </td>
                     @endcan
                     <td>
-                        @if (!empty($user->assignedRoles))
-                            @foreach ($user->assignedRoles as $role)
-                                <span class="badge bg-info">{{ $role }}</span>
+                        @php
+                            // Define un array de colores
+                            $colors = ['bg-primary', 'bg-secondary', 'bg-success', 'bg-danger', 'bg-warning', 'bg-info', 'bg-light', 'bg-dark'];
+                        @endphp
+
+                        @if ($user->roles->isNotEmpty())
+                            @foreach ($user->roles as $index => $role)
+                                <span class="badge {{ $colors[$index % count($colors)] }}">{{ $role->name }}</span>
                             @endforeach
                         @else
                             <span class="badge bg-secondary">Sin rol asignado</span>
                         @endif
+
                     </td>
                     <td>
                         <a href="{{ route('users.ver', $user) }}" class="btn btn-success btn-sm" title="Ver">
@@ -74,29 +80,26 @@
                             </a>
                         </td>
                         <td>
-                            <a href="#" wire:click='edit({{ $user->id }})' class="btn btn-warning btn-sm"
-                                title="Editar">
+                            <a href="#" wire:click='edit({{ $user->id }})' class="btn btn-warning btn-sm" title="Editar">
                                 <i class="far fa-edit"></i>
                             </a>
                         </td>
                     @endcan
                     @can('Usuario eliminar')
                         <td>
-                            <a wire:click="$dispatch('delete',{id: {{ $user->id }},
-                        eventNombre: 'destroyUser'})"
+                            <a wire:click="$dispatch('delete',{id: {{ $user->id }}, eventNombre: 'destroyUser'})"
                                 class="btn btn-danger btn-sm" title="Eliminar">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
                         </td>
                     @endcan
                 </tr>
-
             @empty
-
                 <tr class="text-center">
                     <td colspan="11">Sin registros</td>
                 </tr>
             @endforelse
+
 
         </x-table>
 
