@@ -12,9 +12,9 @@ class Client extends Component
     public $client=1;
     public $nameClient;
     //
-    public $nombre; // Asegúrate de declarar la propiedad
-    public $apellido; // Declarar también
-    public $cod_estudiante; // Declarar también
+    public $nombre;
+    public $apellido;
+    public $cod_estudiante;
     public $ci;
 
     public function render()
@@ -24,23 +24,23 @@ class Client extends Component
         ]);
     }
 
-    #[On('clientes_id')]
+    #[On('client_id')]
     public function client_id($id=1){
         $this->client = $id;
         $this->nameClient($id);
     }
 
-    /*public function mount(){
+    public function mount(){
         $this->nameClient();
-    }*/
-    public function mount() {
+    }
+    /*public function mount() {
         // Asegúrate de que 'client' esté inicializado correctamente
         if ($this->client) {
             $this->nameClient($this->client);
         } else {
             $this->nameClient = 'Cliente no seleccionado'; // o cualquier valor por defecto
         }
-    } 
+    } */
 
     public function nameClient($id=1){
         $findClient = Clientes::find($id);

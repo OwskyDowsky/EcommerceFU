@@ -24,8 +24,8 @@ use App\Livewire\Activitylogs\LogsVer;
 use App\Http\Controllers\EcommerceController;
 use App\Livewire\Venta\VentaCreate;
 use App\Livewire\Cliente\ClienteComponent;
-
-
+use App\Livewire\Venta\VentaList;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,8 +44,7 @@ use App\Livewire\Cliente\ClienteComponent;
 
 Auth::routes(['register'=>false]);
 
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/sanasana', [EcommerceController::class, 'index']);
+Route::get('/sanasana', [EcommerceController::class, 'index'])->name('index');
 Route::get('/', [EcommerceController::class, 'index']);
 Route::get('/ecommerce/card', [EcommerceCard::class, 'carrito'])->name('carrito');
 Route::get('/ecommerce/wishlist', [EcommerceController::class, 'wishlist'])->name('wishlist');
@@ -86,5 +85,5 @@ Route::get('/logs/{log}', LogsVer::class)->name('logs.ver')->middleware(['auth']
 Route::get('/clientes',ClienteComponent::class)->name('clientes')->middleware(['auth', 'can:Cliente ver']);
 /*ventas*/
 Route::get('/ventas/crear',VentaCreate::class)->name('ventas.create')->middleware(['auth']);
-
+Route::get('/ventas', VentaList::class)->name('ventas.list')->middleware(['auth']);
 //Route::get('/ecommerce', EcommerceComponent::class)->name('ecommerce');

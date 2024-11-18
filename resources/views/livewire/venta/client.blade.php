@@ -37,16 +37,25 @@
     {{-- End Modal --}}
 
     @section('styles')
-        <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
-    @endsection
+  <link rel="stylesheet" href="{{asset('plugins/select2/css/select2.min.css')}}">
+  <link rel="stylesheet" href="{{asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+@endsection
 
-    @section('js')
-        <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
+@section('js')
+  <script src="{{asset('plugins/select2/js/select2.full.min.js')}}"></script>
 
-        <script>
-            
-        </script>
-    @endsection 
+  <script>
+
+    $("#select2").select2({
+      theme:"bootstrap4"
+    });
+
+    $("#select2").on('change', function(){
+      Livewire.dispatch('client_id',{id: $(this).val()})
+    })
+
+  </script>
+
+@endsection
       
       </div>

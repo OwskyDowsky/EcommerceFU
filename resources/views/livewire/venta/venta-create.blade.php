@@ -27,5 +27,23 @@
     </x-card>
 
 </div>
+<script>
+  function confirm(){
+    Swal.fire({
+      title: 'confirmar venta',
+      icon: 'info',
+      showCancelButton: true,
+                confirmButtonColor: "#00bc8c",
+                cancelButtonColor: "#d33",
+                confirmButtonText: 'Confirmar',
+                cancelButtonText: 'Cancelar'
+
+    }).then((result) => {
+                if (result.isConfirmed) {
+                    @this.call('{{ isset($venta) ? 'editVenta' : 'createVenta' }}');
+                }
+            });
+  }
+</script>
 
  

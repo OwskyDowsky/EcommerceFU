@@ -12,4 +12,7 @@ class Ventas extends Model
     {
         return $this->belongsTo(Clientes::class);
     }
+    public function items(){
+        return $this->belongsToMany(Item::class)->withPivot(['qty','fecha']);
+    }
 }
