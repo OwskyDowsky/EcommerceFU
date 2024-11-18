@@ -18,3 +18,4 @@ class Messages extends Component
         session()->flash('venta',$ventas); 
     }
 }
+

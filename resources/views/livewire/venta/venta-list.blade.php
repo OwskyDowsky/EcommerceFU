@@ -67,12 +67,8 @@
                             <span></span>
                         @endif
                     </td>
-                    
-                    
-                    
                 </tr>
 
-                
             @empty
                 <tr class="text-center">
                     <td colspan="11">Sin registros</td>

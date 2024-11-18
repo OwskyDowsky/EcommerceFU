@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Navbar con Carrito</title>
-    <!-- Bootstrap CDN -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap@5.3.2.min.css') }}">
     @include('components.layouts.partials.styles')
 </head>
 <body>
+    @include('components.layouts.partials.scripts')
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
@@ -51,7 +51,7 @@
                                 </button>
 
                                 <!-- Ícono de estrella para agregar a la lista de deseos -->
-                                <button onclick="toggleListaDeseos({{ $producto->id }}, '{{ $producto->nombre }}', '{{ $producto->precio }}', '{{ $producto->imagen }}')" class="btn btn-outline-warning btn-sm" title="Agregar a lista de deseos" id="deseo-{{ $producto->id }}">
+                                <button onclick="agregarListaDeseos({{ $producto->id }}, '{{ $producto->nombre }}', '{{ $producto->precio }}', '{{ $producto->imagen }}')" class="btn btn-outline-warning btn-sm" title="Agregar a lista de deseos" id="deseo-{{ $producto->id }}">
                                     <i class="fas fa-star"></i>
                                 </button>
                                 <!-- Botón de información -->
@@ -68,6 +68,7 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
         function agregarAlCarrito(id, nombre, precio) {
             let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
@@ -78,10 +79,16 @@
                 carrito.push({ id: id, nombre: nombre, precio: precio, cantidad: 1 });
             }
             localStorage.setItem('carrito', JSON.stringify(carrito));
-            alert('Producto agregado al carrito');
+            //alert('Producto agregado al carrito');
+            Swal.fire({
+            icon: "success",
+            title: "Producto agregado al carrito",
+            showConfirmButton: false,
+            timer: 1000
+            });
         }
 
-        function toggleListaDeseos(id, nombre, precio, imagen) {
+        function agregarListaDeseos(id, nombre, precio, imagen) {
             let listaDeseos = JSON.parse(localStorage.getItem('listaDeseos')) || [];
             let productoExistente = listaDeseos.find(producto => producto.id === id);
             let btn = document.getElementById(`deseo-${id}`);
@@ -96,6 +103,12 @@
                 listaDeseos.push({ id: id, nombre: nombre, precio: precio, imagen: imagen, cantidad: 1 });
                 btn.classList.remove('btn-outline-warning');
                 btn.classList.add('btn-warning');
+                Swal.fire({
+                icon: "success",
+                title: "Producto agregado a la lista de deseos",
+                showConfirmButton: false,
+                timer: 1000
+                });
             }
 
             localStorage.setItem('listaDeseos', JSON.stringify(listaDeseos));

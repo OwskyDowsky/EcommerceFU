@@ -2,6 +2,11 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap@5.3.2.min.css') }}">
     @include('components.layouts.partials.styles')
     <h1>Carrito de Compra</h1>
+    <div class="d-flex justify-content-between">
+        <a href="{{ route('index') }}" class="btn btn-primary">
+            <i class="fas fa-long-arrow-alt-left"></i> Regresar
+        </a>
+    </div> 
     <div class="card card-info">
         <div class="card-header">
             <h3 class="card-title"><i class="fas fa-cart-plus"></i> Detalles Venta</h3>
@@ -43,6 +48,9 @@
                     </tr>
                 </table>
             </div>
+            <a href="">
+                
+            </a>
         </div>
     </div>
 </div>
@@ -93,13 +101,28 @@
         }
     }
 
-    // Función para quitar un producto del carrito
+    // Función para quitar o reducir la cantidad de un producto en el carrito
     function quitarDelCarrito(id) {
         let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-        carrito = carrito.filter(producto => producto.id !== id);
 
-        localStorage.setItem('carrito', JSON.stringify(carrito));
-        mostrarCarrito();  // Actualizar la vista del carrito
+        // Buscar el producto por su ID
+        let producto = carrito.find(producto => producto.id === id);
+
+        if (producto) {
+            if (producto.cantidad > 1) {
+                // Si la cantidad es mayor que 1, reduce la cantidad en 1
+                producto.cantidad -= 1;
+            } else {
+                // Si la cantidad es 1, eliminar el producto del carrito
+                carrito = carrito.filter(producto => producto.id !== id);
+            }
+
+            // Actualizar el carrito en el localStorage
+            localStorage.setItem('carrito', JSON.stringify(carrito));
+
+            // Mostrar el carrito actualizado
+            mostrarCarrito();
+        }
     }
 
     // Cargar el carrito cuando la página se cargue

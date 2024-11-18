@@ -9,6 +9,7 @@
             </a>
             
         @endif
+        
 
 
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">

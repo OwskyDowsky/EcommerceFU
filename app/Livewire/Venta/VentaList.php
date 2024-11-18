@@ -45,7 +45,6 @@ class VentaList extends Component
             "ventas"=>$ventas
         ]);
     }
-
     // Componente Livewire que escucha el evento y realiza la acción.
     #[On('anularVentas')]
 public function anular($id)
