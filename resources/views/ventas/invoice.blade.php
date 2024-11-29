@@ -94,6 +94,7 @@
             top: 30%;
             left: 50%;
             transform: translateX(-50%);
+            te
         }
 
         /* Contenedor del mensaje "Anulado" */
