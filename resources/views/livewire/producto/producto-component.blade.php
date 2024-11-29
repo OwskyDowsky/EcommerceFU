@@ -128,8 +128,8 @@
                     <label class="fas fa-globe" for="categoria_id"> Categoria:</label>
                     <select wire:model="categoria_id" id="categoria_id" class="form-control">
                         <option value="0">seleccionar</option>
-                        @foreach ($this->categorias as $categorias)
-                            <option value="{{ $categorias->id }}">{{ $categorias->nombre }}</option>
+                        @foreach ($categorias as $categoria)
+                            <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
                         @endforeach
     
                     </select>

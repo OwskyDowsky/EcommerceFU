@@ -3,8 +3,10 @@
 namespace App\Livewire\Venta;
 
 use App\Models\Cart;
+use App\Models\Cupones;
 use App\Models\Ventas;
 use Carbon\Carbon;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -14,21 +16,21 @@ use Livewire\WithPagination;
 class VentaList extends Component
 {
     use WithPagination;
-   
+
     //Propiedades clase
-    public $search='';
-    public $totalRegistros=0;
-    public $cant=5;
+    public $search = '';
+    public $totalRegistros = 0;
+    public $cant = 5;
 
     public function render()
     {
         Cart::clear();
-        if($this->search!=''){
+        if ($this->search != '') {
             $this->resetPage();
         }
 
         $ventasQuery = Ventas::query();
-
+        $this->totalRegistros = Ventas::count();
         if ($this->search) {
             $ventasQuery->where(function ($query) {
                 $query->whereHas('clientes', function ($query) {
@@ -41,28 +43,32 @@ class VentaList extends Component
             ->orderBy('id', 'desc')
             ->paginate($this->cant);
 
-        return view('livewire.venta.venta-list',[
-            "ventas"=>$ventas
+        return view('livewire.venta.venta-list', [
+            "ventas" => $ventas
         ]);
     }
     // Componente Livewire que escucha el evento y realiza la acción.
     #[On('anularVentas')]
-public function anular($id)
-{
-    // Buscar la venta con el ID proporcionado
-    $venta = Ventas::find($id);
+    public function anular($id)
+    {
+        // Buscar la venta con el ID proporcionado
+        $venta = Ventas::find($id);
 
-    if ($venta) {
-        // Cambiar el estado de la venta a 'inusable'
-        $venta->estado = 'anulado';
-        $venta->fecha_anulacion = Carbon::now();
-        $venta->save(); // Guardar los cambios
+        if ($venta) {
+            // Cambiar el estado de la venta a 'inusable'
+            $venta->estado = 'anulado';
+            $venta->fecha_anulacion = Carbon::now();
+            $venta->save(); // Guardar los cambios
 
-        // Puedes agregar un mensaje de confirmación o un evento adicional si lo necesitas
-        session()->flash('msg', 'Venta anulada correctamente.');
-    } else {
-        session()->flash('msg', 'Venta no encontrada.');
+            // Puedes agregar un mensaje de confirmación o un evento adicional si lo necesitas
+            session()->flash('msg', 'Venta anulada correctamente.');
+        } else {
+            session()->flash('msg', 'Venta no encontrada.');
+        }
     }
-}
-
+    #[Computed()]
+    public function cupones()
+    {
+        return Cupones::all();
+    }
 }

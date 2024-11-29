@@ -40,6 +40,8 @@ class ProductoComponent extends Component
     {
         // Filtrar proyectos activos
         $proyectosActivos = Proyectos::where('estado', 'activo')->get();
+        // Filtrar categorias activos
+        $categoriasActivos = Categorias::where('estado', 'activo')->get();
 
         $this->totalRegistros = Productos::count();
         $productos = Productos::where('nombre', 'like', '%' . $this->search . '%')
@@ -47,7 +49,8 @@ class ProductoComponent extends Component
             ->paginate($this->cant);
         return view('livewire.producto.producto-component', [
             'productos' => $productos,
-            'proyectos' => $proyectosActivos     
+            'proyectos' => $proyectosActivos,
+            'categorias' => $categoriasActivos,
         ]);
     }
     #[Computed()]
@@ -153,7 +156,7 @@ class ProductoComponent extends Component
             'image.image' => 'Debe ser un formato de imagen valido',
             'image.max' => 'El tamaño de la imagen debe ser de 3 MB como máximo',
         ];
-        $this->validate($rules);
+        $this->validate($rules, $messages);
 
         $producto->nombre = $this->nombre;
         $producto->descripcion = $this->descripcion;

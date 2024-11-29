@@ -97,15 +97,9 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="{{ route('cupones.categoria') }}" class="nav-link">
+              <a href="{{ route('cupones') }}" class="nav-link">
                 <i class="fas fa-list nav-icon"></i>
-                <p>Cupones por categoría</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ route('cupones.producto') }}" class="nav-link">
-                <i class="fas fa-plus nav-icon"></i>
-                <p>Cupones por producto</p>
+                <p>Cupones</p>
               </a>
             </li>
           </ul>
@@ -148,7 +142,7 @@
         @can('Cliente ver')
         <li class="nav-item">
           <a href="{{ route('clientes') }}" class="nav-link">
-            <i class="nav-icon fas fa-user-times"></i>
+            <i class="nav-icon far fa-user"></i>
             <p>
               Clientes
             </p>
@@ -175,7 +169,9 @@
             <li class="nav-item">
               <a href="{{ route('ventas.list') }}" class="nav-link">
                 <i class="fas fa-shopping-cart nav-icon"></i>
-                <p>Mostrar ventas</p>
+                <p>
+                  Mostrar ventas
+                </p>
               </a>
             </li>
 

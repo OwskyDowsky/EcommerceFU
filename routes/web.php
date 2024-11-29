@@ -22,9 +22,12 @@ use App\Livewire\Activitylogs\LogsComponent;
 use App\Livewire\Activitylogs\LogsVer;
 //use App\Livewire\Ecommerce\EcommerceComponent;
 use App\Http\Controllers\EcommerceController;
+use App\Http\Controllers\PdfController;
 use App\Livewire\Venta\VentaCreate;
 use App\Livewire\Cliente\ClienteComponent;
+use App\Livewire\Cupon\CuponesComponent;
 use App\Livewire\Venta\VentaList;
+use App\Livewire\Ecommerce\EcommerceComponent;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -44,10 +47,12 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes(['register'=>false]);
 
-Route::get('/sanasana', [EcommerceController::class, 'index'])->name('index');
+Route::get('/', EcommerceComponent::class)->name('ecommerce');
+Route::get('/sanasana', EcommerceComponent::class)->name('ecommerce');
+/*Route::get('/sanasana', [EcommerceController::class, 'index'])->name('index');
 Route::get('/', [EcommerceController::class, 'index']);
 Route::get('/ecommerce/card', [EcommerceCard::class, 'carrito'])->name('carrito');
-Route::get('/ecommerce/wishlist', [EcommerceController::class, 'wishlist'])->name('wishlist');
+Route::get('/ecommerce/wishlist', [EcommerceController::class, 'wishlist'])->name('wishlist');*/
 Route::get('/detalle-producto/{slug}', [EcommerceController::class, 'ProductoInfo'])->name('producto.info');
 /*con auth*/
 Route::get('/home',Inicio::class)->name('home')->middleware(['auth']);
@@ -62,9 +67,7 @@ Route::get('/productos/{producto}',ProductoVer::class)->name('productos.ver')->m
 /*sedes*/
 Route::get('/sedes',SedeComponent::class)->name('sedes')->middleware(['auth', 'can:Sede ver']);
 /*cupones*/
-Route::get('/cupones',CuponComponent::class)->name('cupones')->middleware(['auth', 'can:Cupon ver']);
-Route::get('/cupones-categoria',CuponCategoriaComponent::class)->name('cupones.categoria')->middleware(['auth', 'can:Cupon ver']);
-Route::get('/cupones-producto',CuponProductoComponent::class)->name('cupones.producto')->middleware(['auth', 'can:Cupon ver']);
+Route::get('/cupones',CuponesComponent::class)->name('cupones')->middleware(['auth', 'can:Cupon ver']);
 /*usuarios*/
 Route::get('/usuarios',UserComponent::class)->name('usuarios')->middleware(['auth', 'can:Usuario ver']);
 Route::get('/usuarios/{user}',UserVer::class)->name('users.ver')->middleware(['auth', 'can:Usuario ver']);
@@ -78,7 +81,7 @@ Route::get('/roles/{role}', RolPermisoComponent::class)->name('roles.permisos')-
 Route::get('/logs', LogsComponent::class)->name('logs')->middleware(['auth']);
 Route::get('/logs/{log}', LogsVer::class)->name('logs.ver')->middleware(['auth']);
 
-//Route::get('/ecommerce', EcommerceComponent::class)->name('ecommerce');
+Route::get('/ecommerce', EcommerceComponent::class)->name('ecommerce');
 //Route::get('/ecommerce', [EcommerceController::class, 'index']);
 
 /*clientes usuarios estudiantes*/
@@ -86,4 +89,5 @@ Route::get('/clientes',ClienteComponent::class)->name('clientes')->middleware(['
 /*ventas*/
 Route::get('/ventas/crear',VentaCreate::class)->name('ventas.create')->middleware(['auth']);
 Route::get('/ventas', VentaList::class)->name('ventas.list')->middleware(['auth']);
+Route::get('/ventas/invoice/{venta}',[PdfController::class,'invoice'])->name('ventas.invoice')->middleware(['auth']);
 //Route::get('/ecommerce', EcommerceComponent::class)->name('ecommerce');

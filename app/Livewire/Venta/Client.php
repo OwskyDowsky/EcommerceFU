@@ -9,7 +9,7 @@ use Livewire\Component;
 class Client extends Component
 {
     public $Id = 0;
-    public $client=1;
+    public $client = 1;
     public $nameClient;
     //
     public $nombre;
@@ -25,12 +25,14 @@ class Client extends Component
     }
 
     #[On('client_id')]
-    public function client_id($id=1){
+    public function client_id($id = 1)
+    {
         $this->client = $id;
         $this->nameClient($id);
     }
 
-    public function mount(){
+    public function mount()
+    {
         $this->nameClient();
     }
     /*public function mount() {
@@ -42,10 +44,12 @@ class Client extends Component
         }
     } */
 
-    public function nameClient($id=1){
+    public function nameClient($id = 1)
+    {
         $findClient = Clientes::find($id);
-        $this->nameClient = $findClient->name;
+        $this->nameClient = $findClient->nombre . ' (' . $findClient->cod_estudiante . ')';
     }
+
 
     //crear la cliente
     public function store()
@@ -72,7 +76,7 @@ class Client extends Component
         $this->dispatch('close-modal', 'modalClientes');
         $this->dispatch('msg', 'Cliente creado correctamente');
 
-        $this->dispatch('client_id',$cliente->id);
+        $this->dispatch('client_id', $cliente->id);
 
         $this->clean();
     }
@@ -82,8 +86,9 @@ class Client extends Component
         $this->dispatch('open-modal', 'modalClientes');
     }
 
-    public function clean(){
-        $this->reset(['nombre','apellido','cod_estudiante','ci']);
+    public function clean()
+    {
+        $this->reset(['nombre', 'apellido', 'cod_estudiante', 'ci']);
         $this->resetErrorBag();
     }
 }

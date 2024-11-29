@@ -15,4 +15,8 @@ class Ventas extends Model
     public function items(){
         return $this->belongsToMany(Item::class)->withPivot(['qty','fecha']);
     }
+    public function cupones()
+    {
+        return $this->belongsTo(Cupones::class, 'cupon_id'); 
+    }
 }

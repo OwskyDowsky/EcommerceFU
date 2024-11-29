@@ -14,11 +14,17 @@ class Cupones extends Model
     }
     public function productos()
     {
-        return $this->belongsToMany(Productos::class, 'producto_cupon', 'cupon_id', 'producto_id');
+        return $this->belongsToMany(Productos::class);
     }
 
     public function categorias()
     {
-        return $this->belongsToMany(Categorias::class, 'categoria_cupon', 'cupon_id', 'categoria_id');
+        return $this->belongsToMany(Categorias::class);
+    }
+
+    // Relación con cupones
+    public function ventas()
+    {
+        return $this->hasMany(Ventas::class); // Esto indica que un cupón puede estar en muchas ventas
     }
 }

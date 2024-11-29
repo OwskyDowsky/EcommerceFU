@@ -60,7 +60,6 @@ class CuponCategoriaComponent extends Component
             'nombre' => 'required|min:3|max:80|unique:cupones',
             'descuento' => 'required|numeric|min:1|max:100',
             'fecha_vencimiento' => 'required|date',
-            'categoria_id' => 'array',
         ];
         $messages = [
             'nombre.required' => 'El nombre es requerido',
@@ -74,7 +73,7 @@ class CuponCategoriaComponent extends Component
             'fecha_vencimiento.required' => 'La fecha de vencimiento es requerida',
             'fecha_vencimiento.date' => 'La fecha de vencimiento debe ser de tipo fecha',
         ];
-        $this->validate($rules);
+        $this->validate($rules, $messages);
     
         // Crear cupón manualmente
         $cupon = new Cupones();
